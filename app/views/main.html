@@ -1,74 +1,33 @@
-<nav class="navbar navbar-inverse" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
+<nav class="navbar navbar-default">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" ng-href="http://cytoscape.github.io/cytoscape.js/">cytoscape.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <li class="dropdown" id="vs-selector">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <strong>Visual Style:</strong> {{ currentVS }}<b class="caret"></b>
+                </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li ng-repeat="title in styleNames" ng-click="switchVS(title)">
+                        {{ title }}
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown" id="network-selector">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <strong>Network:</strong> {{ currentNetwork }}<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">
+                        {{ networkName }}
+                    </li>
                 </ul>
             </li>
         </ul>
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
+    </div>
 </nav>
-<!--<nav class="navbar navbar-fixed-top">-->
-    <!--<div class="container">-->
-        <!---->
-        <!--<ul class="nav navbar-nav">-->
-            <!--<li class="active"><a ng-href="#">Home</a></li>-->
-            <!--<li>-->
-                <!--<select class="combobox">-->
-                    <!--<option>Network 1</option>-->
-                    <!--<option value="PA">Pennsylvania</option>-->
-                    <!--<option value="CT">Connecticut</option>-->
-                    <!--<option value="NY">New York</option>-->
-                    <!--<option value="MD">Maryland</option>-->
-                    <!--<option value="VA">Virginia</option>-->
-                <!--</select>-->
-            <!--</li>-->
-            <!--<li><a ng-href="http://www.cytoscape.org">Cytoscape</a></li>-->
-            <!--<li><a ng-href="">Cytoscape.js</a></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-<!--</nav>-->
 
 <div id="network"></div>
 
@@ -83,7 +42,7 @@
             <td>Name</td>
         </tr>
         </thead>
-        <tbody ng-repeat="node in nodes">
+        <tbody data-ng-repeat="node in nodes">
         <tr>
             <td>{{ node.data.id }}</td>
             <td>{{ node.data.name }}</td>

@@ -2,20 +2,23 @@
 
 angular.module('cyViewerApp')
     .controller('MainCtrl', function ($scope, $http) {
-        $scope.networks = [
-            'Net 1',
-            'Net 2',
-            'Net 3'
-        ];
 
-        var NETWORK_FILE = 'data/sample1.cyjs';
+        var NETWORK_FILE = 'data/gal.cyjs';
         var VISUAL_STYLE_FILE = 'data/galVS.json';
 
-        var DEFAULT_VISUAL_STYLE = 'Directed';
+        var DEFAULT_VISUAL_STYLE = 'default';
+
+        var networkData = {};
+        var vs = {};
+
+        // Application global objects
+        $scope.networks = {};
+        $scope.visualStyles = {};
+        $scope.styleNames = [];
+        $scope.networkNames = [];
+        $scope.currentVS = DEFAULT_VISUAL_STYLE;
 
         console.log('Network rendering start...');
-
-        var visualStyles = {};
 
         // Basic settings for the Cytoscape window
         var options = {
@@ -31,15 +34,14 @@ angular.module('cyViewerApp')
             ready: function () {
                 var cy = this;
                 cy.load(networkData.elements);
-                setVisualStyleCombobox(cy);
-                setNetworkComboBox(cy);
-
+                $scope.cy = cy;
+                $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
                 updateNetworkData(cy);
             }
         };
 
         function updateNetworkData(cy) {
-            var dropZone = $('.network');
+            var dropZone = $('#network');
             dropZone.on('dragenter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -56,74 +58,74 @@ angular.module('cyViewerApp')
                 var reader = new FileReader();
                 reader.onload = function (evt) {
                     var network = JSON.parse(evt.target.result);
+                    var networkName = network.data.name;
+                    console.log("NetworkName = " + networkName);
+                    if(networkName === undefined) {
+                        networkName = "Unknown";
+                    }
+                    $scope.$apply(function() {
+                        $scope.networks[networkName] = network;
+                        $scope.networkNames.push(networkName);
+                        $scope.currentNetwork = networkName;
+                        console.log($scope.networkNames);
+                    });
                     cy.load(network.elements);
                 };
                 reader.readAsText(networkFile);
             });
         }
 
-        function setNetworkComboBox(cy) {
-            var network;
-            var networkSelector = $('#networks');
-            for (var i = 0; i < 5; i++) {
-                networkSelector.append('<option>Network ' + i + '</option>');
-            }
 
-            networkSelector.on('change', function (event) {
-                var selectedNetworkName = $(this).val();
-                console.log(selectedNetworkName);
-            });
-        }
+        $scope.switchNetwork = function(networkName) {
+            $scope.currentNetwork = networkName;
+            var network = $scope.networks[networkName];
+            $scope.cy.load(network.elements);
+        };
 
-        function setVisualStyleCombobox(cy) {
-            var visualStyle;
-            var visualStyleSelector = $('#vs');
-            for (var i = 0; i < vs.length; i++) {
-                visualStyle = vs[i];
-                var title = visualStyle.title;
-                visualStyles[title] = visualStyle;
-                visualStyleSelector.append('<option>' + title + '</option>');
-            }
-            cy.style().fromJson(visualStyles[DEFAULT_VISUAL_STYLE].style).update();
+        //
+        // Apply Visual Style
+        //
+        $scope.switchVS = function(vsName) {
+            // Apply Visual Style
+            $scope.cy.style().fromJson($scope.visualStyles[vsName].style).update();
+            // Set current title
+            $scope.currentVS = vsName;
+        };
 
-            visualStyleSelector.val(DEFAULT_VISUAL_STYLE);
-            visualStyleSelector.on('change', function (event) {
-                var selectedVisualStyleName = $(this).val();
-                console.log(selectedVisualStyleName);
-                cy.style().fromJson(visualStyles[selectedVisualStyleName].style).update();
-            });
-        }
-
-        var networkData = {};
-        var vs = {};
 
         $http({method: 'GET', url: VISUAL_STYLE_FILE}).
             success(function(data) {
                 vs = data;
-                console.log("*********** OK!");
-                console.log(vs);
                 $http({method: 'GET', url: NETWORK_FILE}).
                     success(function(data) {
                         networkData = data;
                         $('#network').cytoscape(options);
-                        console.log("*********** OK2!");
-                        console.log(networkData);
-                        initTable();
+                        init();
                     }).
                     error(function(data, status, headers, config) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
                     });
             }).
             error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
             });
 
-        function initTable() {
+        function init() {
             $scope.nodes = networkData.elements.nodes;
-            console.log("Got nodes***********************");
-            console.log($scope.nodes);
+            initVisualStyleCombobox();
+            // Set network name
+            var networkName = networkData.data.name;
+            $scope.currentNetwork = networkData.data.name;
+            $scope.networks[networkName] = networkData;
+            $scope.networkNames.push(networkName);
         }
 
+        function initVisualStyleCombobox() {
+            var styleNames = [];
+            for (var i = 0; i < vs.length; i++) {
+                var visualStyle = vs[i];
+                var title = visualStyle.title;
+                styleNames[i] = title;
+                $scope.visualStyles[title] = visualStyle;
+                $scope.styleNames[i] = title;
+            }
+        }
     });
