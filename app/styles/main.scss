@@ -70,9 +70,11 @@ nav {
   width: 100%;
   z-index: 1000;
 }
-thead tr {
-  font-weight: 600;
-  font-size: 18px;
+thead {
+  tr {
+    font-weight: 600;
+    font-size: 18px;
+  }
 }
 
 tbody tr td {

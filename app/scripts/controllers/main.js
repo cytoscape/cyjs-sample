@@ -1,15 +1,12 @@
 'use strict';
 
 angular.module('cyViewerApp')
-    .controller('MainCtrl', function ($scope, $http) {
+    .controller('MainCtrl', function ($scope, $http, Network, VisualStyles) {
 
         var NETWORK_FILE = 'data/gal.cyjs';
         var VISUAL_STYLE_FILE = 'data/galVS.json';
 
         var DEFAULT_VISUAL_STYLE = 'default';
-
-        var networkData = {};
-        var vs = {};
 
         // Application global objects
         $scope.networks = {};
@@ -32,15 +29,15 @@ angular.module('cyViewerApp')
             },
 
             ready: function () {
-                var cy = this;
-                cy.load(networkData.elements);
-                $scope.cy = cy;
+                $scope.cy = this;
+                $scope.cy.load(networkData.elements);
                 $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
-                updateNetworkData(cy);
+                dropSupport();
             }
         };
 
-        function updateNetworkData(cy) {
+
+        function dropSupport() {
             var dropZone = $('#network');
             dropZone.on('dragenter', function (e) {
                 e.stopPropagation();
@@ -75,39 +72,6 @@ angular.module('cyViewerApp')
             });
         }
 
-
-        $scope.switchNetwork = function(networkName) {
-            $scope.currentNetwork = networkName;
-            var network = $scope.networks[networkName];
-            $scope.cy.load(network.elements);
-        };
-
-        //
-        // Apply Visual Style
-        //
-        $scope.switchVS = function(vsName) {
-            // Apply Visual Style
-            $scope.cy.style().fromJson($scope.visualStyles[vsName].style).update();
-            // Set current title
-            $scope.currentVS = vsName;
-        };
-
-
-        $http({method: 'GET', url: VISUAL_STYLE_FILE}).
-            success(function(data) {
-                vs = data;
-                $http({method: 'GET', url: NETWORK_FILE}).
-                    success(function(data) {
-                        networkData = data;
-                        $('#network').cytoscape(options);
-                        init();
-                    }).
-                    error(function(data, status, headers, config) {
-                    });
-            }).
-            error(function(data, status, headers, config) {
-            });
-
         function init() {
             $scope.nodes = networkData.elements.nodes;
             initVisualStyleCombobox();
@@ -128,4 +92,29 @@ angular.module('cyViewerApp')
                 $scope.styleNames[i] = title;
             }
         }
+
+        $scope.switchNetwork = function(networkName) {
+            $scope.currentNetwork = networkName;
+            var network = $scope.networks[networkName];
+            $scope.cy.load(network.elements);
+        };
+
+        //
+        // Apply Visual Style
+        //
+        $scope.switchVS = function(vsName) {
+            // Apply Visual Style
+            $scope.cy.style().fromJson($scope.visualStyles[vsName].style).update();
+            // Set current title
+            $scope.currentVS = vsName;
+        };
+
+
+        // Start loading...
+        var vs = VisualStyles.query({filename: VISUAL_STYLE_FILE});
+        var networkData = Network.get({filename: NETWORK_FILE}, function () {
+                $('#network').cytoscape(options);
+                init();
+            });
+
     });
