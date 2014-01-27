@@ -58,6 +58,7 @@ nav {
 }
 
 #table-view {
+  font-size: 9px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 20px;
@@ -66,7 +67,7 @@ nav {
   position: fixed;
   left: 0;
   bottom: 0;
-  height: 20%;
+  height: 30%;
   width: 100%;
   z-index: 1000;
 }

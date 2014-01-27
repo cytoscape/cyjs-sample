@@ -32,21 +32,28 @@
 <div id="network"></div>
 
 <div id="table-view">
-    <table class="table table-striped">
+    <tabset justified="true">
+        <tab heading="Node">
 
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>ItemId</td>
-            <td>Name</td>
-        </tr>
-        </thead>
-        <tbody data-ng-repeat="node in nodes">
-        <tr>
-            <td>{{ node.data.id }}</td>
-            <td>{{ node.data.name }}</td>
-        </tr>
-        </tbody>
-    </table>
+            <table class="table table-striped">
+
+                <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>ItemId</td>
+                    <td>Name</td>
+                </tr>
+                </thead>
+                <tbody data-ng-repeat="node in nodes">
+                <tr>
+                    <td>{{ node.data.id }}</td>
+                    <td>{{ node.data.name }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </tab>
+        <tab heading="Edge">Edge Table</tab>
+        <tab heading="Network">Network Table</tab>
+    </tabset>
 </div>
