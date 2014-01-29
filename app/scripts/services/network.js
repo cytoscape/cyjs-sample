@@ -11,7 +11,7 @@
 angular.module('cyViewerApp')
     .factory('Network', ['$resource', function ($resource) {
 
-        return $resource('/:filename', {filename: '@filename'});
+        return $resource('data/:filename', {filename: '@filename'});
 
       }]
     );

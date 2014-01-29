@@ -3,8 +3,8 @@
 angular.module('cyViewerApp')
     .controller('MainCtrl', function ($scope, $http, Network, VisualStyles) {
 
-        var NETWORK_FILE = 'data/gal.cyjs';
-        var VISUAL_STYLE_FILE = 'data/galVS.json';
+        var NETWORK_FILE = 'gal.cyjs';
+        var VISUAL_STYLE_FILE = 'galVS.json';
 
         var DEFAULT_VISUAL_STYLE = 'default';
 
@@ -39,7 +39,7 @@ angular.module('cyViewerApp')
 
 
         function dropSupport() {
-            var dropZone = $('#network');
+            var dropZone = angular.element('#network');
             dropZone.on('dragenter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -57,9 +57,8 @@ angular.module('cyViewerApp')
                 reader.onload = function (evt) {
                     var network = JSON.parse(evt.target.result);
                     var networkName = network.data.name;
-                    console.log("NetworkName = " + networkName);
                     if(networkName === undefined) {
-                        networkName = "Unknown";
+                        networkName = 'Unknown';
                     }
                     $scope.$apply(function() {
                         $scope.networks[networkName] = network;
@@ -67,7 +66,7 @@ angular.module('cyViewerApp')
                         $scope.currentNetwork = networkName;
                         console.log($scope.networkNames);
                     });
-                    cy.load(network.elements);
+                    $scope.cy.load(network.elements);
                 };
                 reader.readAsText(networkFile);
             });
@@ -153,8 +152,7 @@ angular.module('cyViewerApp')
         // Start loading...
         var vs = VisualStyles.query({filename: VISUAL_STYLE_FILE});
         var networkData = Network.get({filename: NETWORK_FILE}, function () {
-                $('#network').cytoscape(options);
+                angular.element('#network').cytoscape(options);
                 init();
             });
-
     });
