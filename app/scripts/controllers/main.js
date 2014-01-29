@@ -33,6 +33,7 @@ angular.module('cyViewerApp')
                 $scope.cy.load(networkData.elements);
                 $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
                 dropSupport();
+                setEventListeners();
             }
         };
 
@@ -82,6 +83,44 @@ angular.module('cyViewerApp')
             $scope.networkNames.push(networkName);
         }
 
+
+        /*
+            Event listener setup for Cytoscape.js
+         */
+        function setEventListeners() {
+
+            $scope.selectedNodes = {};
+            $scope.selectedEdges= {};
+
+            // Node selection
+            $scope.cy.on('select', 'node', function(event) {
+                var id = event.cyTarget.id();
+                $scope.$apply(function() {
+                    $scope.selectedNodes[id] = event.cyTarget;
+                });
+            });
+            $scope.cy.on('select', 'edge', function(event) {
+                var id = event.cyTarget.id();
+                $scope.$apply(function() {
+                    $scope.selectedEdges[id] = event.cyTarget;
+                });
+            });
+
+            // Reset selection
+            $scope.cy.on('unselect', 'node', function(event) {
+                var id = event.cyTarget.id();
+                $scope.$apply(function() {
+                    delete $scope.selectedNodes[id];
+                });
+            });
+            $scope.cy.on('unselect', 'edge', function(event) {
+                var id = event.cyTarget.id();
+                $scope.$apply(function() {
+                    delete $scope.selectedEdges[id];
+                });
+            });
+        }
+
         function initVisualStyleCombobox() {
             var styleNames = [];
             for (var i = 0; i < vs.length; i++) {
@@ -108,6 +147,7 @@ angular.module('cyViewerApp')
             // Set current title
             $scope.currentVS = vsName;
         };
+
 
 
         // Start loading...

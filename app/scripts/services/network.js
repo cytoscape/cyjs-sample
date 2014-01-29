@@ -13,5 +13,5 @@ angular.module('cyViewerApp')
 
         return $resource('/:filename', {filename: '@filename'});
 
-    }]
+      }]
     );

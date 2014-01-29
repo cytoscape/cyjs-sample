@@ -39,16 +39,16 @@
 
                 <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>ItemId</td>
-                    <td>Name</td>
+                    <td>SUID</td>
+                    <td>name</td>
+                    <td>shared-name</td>
+                    <td>selected</td>
                 </tr>
                 </thead>
-                <tbody data-ng-repeat="node in nodes">
+                <tbody data-ng-repeat="node in selectedNodes">
                 <tr>
-                    <td>{{ node.data.id }}</td>
-                    <td>{{ node.data.name }}</td>
+                    <td>{{ node.id() }}</td>
+                    <td>{{ node.data('name') }}</td>
                 </tr>
                 </tbody>
             </table>

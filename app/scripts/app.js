@@ -5,13 +5,13 @@
 'use strict';
 
 angular.module('cyViewerApp',
-        [
-            'ngCookies',
-            'ngResource',
-            'ngSanitize',
-            'ngRoute',
-            'ui.bootstrap'
-        ])
+    [
+        'ngCookies',
+        'ngResource',
+        'ngSanitize',
+        'ngRoute',
+        'ui.bootstrap'
+    ])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
