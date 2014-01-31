@@ -1,12 +1,15 @@
+/*global _ */
 'use strict';
 
 angular.module('cyViewerApp')
     .controller('MainCtrl', function ($scope, $http, Network, VisualStyles) {
 
-        var NETWORK_FILE = 'gal.cyjs';
-        var VISUAL_STYLE_FILE = 'galVS.json';
+        var NETWORK_SECTION_ID = '#network';
 
-        var DEFAULT_VISUAL_STYLE = 'default';
+        var NETWORK_FILE = 'ps1.cyjs';
+        var VISUAL_STYLE_FILE = 'ps1.json';
+
+        var DEFAULT_VISUAL_STYLE = 'hallmarksOfCancer';
 
         // Application global objects
         $scope.networks = {};
@@ -31,15 +34,20 @@ angular.module('cyViewerApp')
             ready: function () {
                 $scope.cy = this;
                 $scope.cy.load(networkData.elements);
-                $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
-                dropSupport();
-                setEventListeners();
+
+                VisualStyles.query({filename: VISUAL_STYLE_FILE}, function(vs) {
+
+                    init(vs);
+                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
+                    dropSupport();
+                    setEventListeners();
+                });
             }
         };
 
 
         function dropSupport() {
-            var dropZone = angular.element('#network');
+            var dropZone = angular.element(NETWORK_SECTION_ID);
             dropZone.on('dragenter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -56,25 +64,37 @@ angular.module('cyViewerApp')
                 var reader = new FileReader();
                 reader.onload = function (evt) {
                     var network = JSON.parse(evt.target.result);
-                    var networkName = network.data.name;
-                    if(networkName === undefined) {
-                        networkName = 'Unknown';
+                    var networkName = 'Unknown';
+                    // Check data section is available or not.
+                    var networkData = network.data;
+                    if (networkData !== undefined) {
+                        if (networkData.name !== undefined) {
+                            networkName = networkData.name;
+                        }
                     }
-                    $scope.$apply(function() {
+
+                    console.log($scope.networkNames);
+
+                    while (_.contains($scope.networkNames, networkName)) {
+                        networkName = networkName + '*';
+                    }
+
+                    $scope.$apply(function () {
                         $scope.networks[networkName] = network;
                         $scope.networkNames.push(networkName);
                         $scope.currentNetwork = networkName;
                         console.log($scope.networkNames);
                     });
                     $scope.cy.load(network.elements);
+                    reset();
                 };
                 reader.readAsText(networkFile);
             });
         }
 
-        function init() {
+        function init(vs) {
             $scope.nodes = networkData.elements.nodes;
-            initVisualStyleCombobox();
+            initVisualStyleCombobox(vs);
             // Set network name
             var networkName = networkData.data.name;
             $scope.currentNetwork = networkData.data.name;
@@ -83,64 +103,66 @@ angular.module('cyViewerApp')
         }
 
 
+        function reset() {
+            $scope.selectedNodes = {};
+            $scope.selectedEdges = {};
+        }
+
         /*
-            Event listener setup for Cytoscape.js
+         Event listener setup for Cytoscape.js
          */
         function setEventListeners() {
 
             $scope.selectedNodes = {};
-            $scope.selectedEdges= {};
+            $scope.selectedEdges = {};
 
             // Node selection
-            $scope.cy.on('select', 'node', function(event) {
+            $scope.cy.on('select', 'node', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function() {
+                $scope.$apply(function () {
                     $scope.selectedNodes[id] = event.cyTarget;
                 });
             });
-            $scope.cy.on('select', 'edge', function(event) {
+            $scope.cy.on('select', 'edge', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function() {
+                $scope.$apply(function () {
                     $scope.selectedEdges[id] = event.cyTarget;
                 });
             });
 
             // Reset selection
-            $scope.cy.on('unselect', 'node', function(event) {
+            $scope.cy.on('unselect', 'node', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function() {
+                $scope.$apply(function () {
                     delete $scope.selectedNodes[id];
                 });
             });
-            $scope.cy.on('unselect', 'edge', function(event) {
+            $scope.cy.on('unselect', 'edge', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function() {
+                $scope.$apply(function () {
                     delete $scope.selectedEdges[id];
                 });
             });
         }
 
-        function initVisualStyleCombobox() {
-            var styleNames = [];
-            for (var i = 0; i < vs.length; i++) {
-                var visualStyle = vs[i];
-                var title = visualStyle.title;
-                styleNames[i] = title;
-                $scope.visualStyles[title] = visualStyle;
-                $scope.styleNames[i] = title;
-            }
+        function initVisualStyleCombobox(vs) {
+            _.each(vs, function (visualStyle) {
+                $scope.visualStyles[visualStyle.title] = visualStyle;
+            });
         }
 
-        $scope.switchNetwork = function(networkName) {
+        $scope.switchNetwork = function (networkName) {
             $scope.currentNetwork = networkName;
             var network = $scope.networks[networkName];
             $scope.cy.load(network.elements);
+            reset();
         };
+
 
         //
         // Apply Visual Style
         //
-        $scope.switchVS = function(vsName) {
+        $scope.switchVS = function (vsName) {
             // Apply Visual Style
             $scope.cy.style().fromJson($scope.visualStyles[vsName].style).update();
             // Set current title
@@ -148,11 +170,8 @@ angular.module('cyViewerApp')
         };
 
 
-
         // Start loading...
-        var vs = VisualStyles.query({filename: VISUAL_STYLE_FILE});
         var networkData = Network.get({filename: NETWORK_FILE}, function () {
-                angular.element('#network').cytoscape(options);
-                init();
-            });
+            angular.element(NETWORK_SECTION_ID).cytoscape(options);
+        });
     });

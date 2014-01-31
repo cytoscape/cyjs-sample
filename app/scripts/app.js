@@ -10,7 +10,8 @@ angular.module('cyViewerApp',
         'ngResource',
         'ngSanitize',
         'ngRoute',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angular-underscore'
     ])
     .config(function ($routeProvider) {
         $routeProvider

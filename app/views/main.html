@@ -10,8 +10,8 @@
                     <strong>Visual Style:</strong> {{ currentVS }}<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="title in styleNames" ng-click="switchVS(title)">
-                        {{ title }}
+                    <li ng-repeat="style in visualStyles" ng-click="switchVS(style.title)">
+                        {{ style.title }}
                     </li>
                 </ul>
             </li>

@@ -2,7 +2,6 @@
  * Created by kono on 2014/01/24.
  */
 
-/*global angular */
 'use strict';
 
 /**
