@@ -31,29 +31,37 @@
 
 <div id="network"></div>
 
-<div id="table-view">
-    <tabset justified="true">
-        <tab heading="Node">
+<div class="button-bar">
+    <button ng-click="toggleTableBrowser()" type="button" class="btn btn-default" data-toggle="button">Hide</button>
+</div>
 
-            <table class="table table-striped">
+<div ng-show="browserState.show" class="table-browser">
+    <div id="table-view">
+        <tabset justified="true">
+            <tab heading="Node">
 
-                <thead>
-                <tr>
-                    <td>SUID</td>
-                    <td>name</td>
-                    <td>shared-name</td>
-                    <td>selected</td>
-                </tr>
-                </thead>
-                <tbody data-ng-repeat="node in selectedNodes">
-                <tr>
-                    <td>{{ node.id() }}</td>
-                    <td>{{ node.data('name') }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </tab>
-        <tab heading="Edge">Edge Table</tab>
-        <tab heading="Network">Network Table</tab>
-    </tabset>
+                <table class="table table-striped table-bordered table-hover">
+
+                    <thead>
+                    <tr>
+                        <td>SUID</td>
+                        <td ng-repeat="columnName in columnNames">
+                            {{columnName}}
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody data-ng-repeat="node in selectedNodes">
+                    <tr>
+                        <td>{{ node.id() }}</td>
+                        <td ng-repeat="colName in columnNames">
+                            {{node.data(colName)}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </tab>
+            <tab heading="Edge">Edge Table</tab>
+            <tab heading="Network">Network Table</tab>
+        </tabset>
+    </div>
 </div>

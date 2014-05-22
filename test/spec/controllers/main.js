@@ -16,7 +16,7 @@ describe('Controller: MainCtrl', function () {
         });
     }));
 
-    it('should attach a list of awesomeThings to the scope', function () {
+    it('networkName list should be empty at the beginning.', function () {
         console.log(scope);
         expect(scope.networkNames.length).toBe(0);
     });

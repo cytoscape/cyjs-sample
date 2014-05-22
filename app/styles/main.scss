@@ -46,7 +46,7 @@ nav {
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: #efefef;
+  background-color: #458BBE;
   background-repeat: no-repeat;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -57,30 +57,48 @@ nav {
   top: 0;
 }
 
+
+.button-bar {
+  font-size: 10px;
+  color: #555555;
+  background-color: rgba(255,255,255,0.0);
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  height: 40px;
+  width: 100%;
+  z-index: 200;
+}
+
 #table-view {
-  font-size: 9px;
-  overflow-x: hidden;
+  font-size: 11px;
+  overflow-x: scroll;
   overflow-y: scroll;
   padding: 20px;
   color: #555555;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255,255,255,0.8);
   position: fixed;
   left: 0;
   bottom: 0;
   height: 30%;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
 }
+
+
+
 thead {
   tr {
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 14px;
   }
 }
 
 tbody tr td {
   color: #222222;
-  background-color: rgba(10, 10, 10, 0.0) !important;
+  max-width: 400px !important;
+  min-width: 150px !important;
+  word-break: break-all;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

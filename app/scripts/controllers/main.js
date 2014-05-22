@@ -6,10 +6,10 @@ angular.module('cyViewerApp')
 
         var NETWORK_SECTION_ID = '#network';
 
-        var NETWORK_FILE = 'ps1.cyjs';
-        var VISUAL_STYLE_FILE = 'ps1.json';
+        var NETWORK_FILE = 'yeast_intact.cyjs';
+        var VISUAL_STYLE_FILE = 'yeast_intact_vs.json';
 
-        var DEFAULT_VISUAL_STYLE = 'hallmarksOfCancer';
+        var DEFAULT_VISUAL_STYLE = 'PSIMI 25 Style';
 
         // Application global objects
         $scope.networks = {};
@@ -17,6 +17,10 @@ angular.module('cyViewerApp')
         $scope.styleNames = [];
         $scope.networkNames = [];
         $scope.currentVS = DEFAULT_VISUAL_STYLE;
+
+        $scope.browserState = {show: true};
+
+        $scope.columnNames = [];
 
         console.log('Network rendering start...');
 
@@ -38,12 +42,13 @@ angular.module('cyViewerApp')
                 VisualStyles.query({filename: VISUAL_STYLE_FILE}, function(vs) {
 
                     init(vs);
-                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
+//                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
                     dropSupport();
                     setEventListeners();
                 });
             }
         };
+
 
 
         function dropSupport() {
@@ -100,6 +105,12 @@ angular.module('cyViewerApp')
             $scope.currentNetwork = networkData.data.name;
             $scope.networks[networkName] = networkData;
             $scope.networkNames.push(networkName);
+
+            // Get column names
+            var oneNode = $scope.nodes[0];
+            for(var colName in oneNode.data) {
+                $scope.columnNames.push(colName);
+            }
         }
 
 
@@ -113,6 +124,7 @@ angular.module('cyViewerApp')
          */
         function setEventListeners() {
 
+            console.log('Event listeners##########...');
             $scope.selectedNodes = {};
             $scope.selectedEdges = {};
 
@@ -158,6 +170,9 @@ angular.module('cyViewerApp')
             reset();
         };
 
+        $scope.toggleTableBrowser = function() {
+            $scope.browserState.show = !$scope.browserState.show;
+        };
 
         //
         // Apply Visual Style

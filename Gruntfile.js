@@ -393,12 +393,12 @@ module.exports = function (grunt) {
     'concat',
     'ngmin',
     'copy:dist',
-//    'cdnify',
-    'cssmin'
-//    'uglify',
-//    'rev',
-//    'usemin',
-//    'htmlmin'
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [
