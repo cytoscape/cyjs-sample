@@ -17,7 +17,6 @@ describe('Controller: MainCtrl', function () {
     }));
 
     it('networkName list should be empty at the beginning.', function () {
-        console.log(scope);
         expect(scope.networkNames.length).toBe(0);
     });
 });
