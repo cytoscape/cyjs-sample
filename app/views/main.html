@@ -1,7 +1,11 @@
-<nav class="navbar navbar-default">
-    <div class="navbar-header">
-        <a class="navbar-brand" ng-href="http://cytoscape.github.io/cytoscape.js/">cytoscape.js</a>
-    </div>
+<div id="network" ng-style="{'background-color': bg.color}"></div>
+
+<div class="overlay" ng-show="overlayState.show">
+    <h4>{{currentNetwork}}</h4>
+    <ul>
+        <li>Number of Nodes: {{numNodes}}</li>
+        <li>Number of Edges: {{numEdges}}</li>
+    </ul>
 
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -17,7 +21,7 @@
             </li>
             <li class="dropdown" id="network-selector">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <strong>Network:</strong> {{ currentNetwork }}<b class="caret"></b>
+                    {{ currentNetwork }}<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">
@@ -27,12 +31,22 @@
             </li>
         </ul>
     </div>
-</nav>
 
-<div id="network"></div>
+</div>
 
 <div class="button-bar">
-    <button ng-click="toggleTableBrowser()" type="button" class="btn btn-default" data-toggle="button">Hide</button>
+    <div class="custom-button" ng-click="toggleTableBrowser()">
+        <span class="glyphicon glyphicon-list-alt"></span>
+    </div>
+    <div class="custom-button" ng-click="toggleOverlay()">
+        <span class="glyphicon glyphicon-info-sign"></span>
+    </div>
+    <div class="custom-button" ng-click="fit()">
+        <span class="glyphicon glyphicon-resize-full"></span>
+    </div>
+    <div class="custom-button" colorpicker colorpicker-position="top" ng-model="bg.color">
+        <span class="glyphicon glyphicon-tint"></span>
+    </div>
 </div>
 
 <div ng-show="browserState.show" class="table-browser">

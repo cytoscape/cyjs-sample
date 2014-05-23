@@ -22,17 +22,19 @@ nav {
   background-color: rgba(0, 0, 0, 0.0);
   height: 60px;
   z-index: 1000;
+  color: #FFFFFF !important;
 }
 .navbar {
   background-color: rgba(0, 0, 0, 0.0);
   padding-top: 5px;
   border: none;
+  color: #dddddd !important;
 }
 
 .navbar-brand {
   font-size: 32px;
   font-weight: 100;
-  color: #121212;
+  color: #dddddd !important;
 }
 
 #vs-selector, #network-selector {
@@ -46,7 +48,7 @@ nav {
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: #458BBE;
+  background-color: #458BEE;
   background-repeat: no-repeat;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -57,26 +59,13 @@ nav {
   top: 0;
 }
 
-
-.button-bar {
-  font-size: 10px;
-  color: #555555;
-  background-color: rgba(255,255,255,0.0);
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  height: 40px;
-  width: 100%;
-  z-index: 200;
-}
-
 #table-view {
   font-size: 11px;
   overflow-x: scroll;
   overflow-y: scroll;
   padding: 20px;
   color: #555555;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
   position: fixed;
   left: 0;
   bottom: 0;
@@ -84,8 +73,6 @@ nav {
   width: 100%;
   z-index: 100;
 }
-
-
 
 thead {
   tr {
@@ -99,6 +86,79 @@ tbody tr td {
   max-width: 400px !important;
   min-width: 150px !important;
   word-break: break-all;
+}
+
+/*
+  Custom Buttons
+*/
+.button-bar {
+  font-size: 10px;
+  color: #555555;
+  background-color: #DDDDDD;
+  position: fixed;
+  bottom: 1em;
+  width: 100%;
+  z-index: 200;
+}
+.custom-button {
+  border: solid #666666 2px;
+  color: #555555;
+  background-color: rgba(0,0,0,0.0);
+  text-align: center;
+  font-size: 30px;
+  z-index: 200;
+  float: left;
+  border-radius: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 52px;
+  width: 52px;
+}
+
+
+.overlay {
+
+  overflow-x: none;
+  overflow-y: scroll !important;
+  font-size: 18px;
+  font-weight: 100;
+  border: solid #dddddd 1px;
+  border-radius: 8px;
+  color: #FFFFFF;
+  background-color: rgba(55,55,55,0.85);
+  position: fixed;
+  top: 10px;
+  right: 10px;
+
+  padding-top: 10px;
+
+  height: 20%;
+  width: 400px;
+  z-index: 200;
+
+  h4 {
+    font-weight: 100;
+    padding: 10px;
+    text-align: center;
+    background-color: #EEEEEE;
+    color: #444444;
+  }
+
+}
+
+.float-table {
+  overflow-x: none;
+  overflow-y: scroll !important;
+  padding: 40px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

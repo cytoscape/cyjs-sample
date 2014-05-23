@@ -1,24 +1,25 @@
 {
-    "name": "cytoscapejs-basic",
-    "version": "0.1.1",
-    "dependencies": {
-        "underscore": "latest",
-        "angular": "1.2.16",
-        "json3": "~3.2.6",
-        "es5-shim": "~2.1.0",
-        "jquery": "~1.11.0",
-        "bootstrap": "~3.0.3",
-        "angular-resource": "1.2.16",
-        "angular-cookies": "1.2.16",
-        "angular-sanitize": "1.2.16",
-        "angular-route": "1.2.16",
-        "sass-bootstrap": "~3.0.2",
-        "cytoscape.js": "git@github.com:cytoscape/cytoscape.js.git",
-        "angular-bootstrap": "latest",
-        "angular-underscore": "*"
-    },
-    "devDependencies": {
-        "angular-mocks": "1.2.16",
-        "angular-scenario": "1.2.16"
-    }
+  "name": "cytoscapejs-basic",
+  "version": "0.1.1",
+  "dependencies": {
+    "underscore": "latest",
+    "angular": "1.2.16",
+    "json3": "~3.2.6",
+    "es5-shim": "~2.1.0",
+    "jquery": "~1.11.0",
+    "bootstrap": "~3.0.3",
+    "angular-resource": "1.2.16",
+    "angular-cookies": "1.2.16",
+    "angular-sanitize": "1.2.16",
+    "angular-route": "1.2.16",
+    "sass-bootstrap": "~3.0.2",
+    "cytoscape.js": "git@github.com:cytoscape/cytoscape.js.git",
+    "angular-bootstrap": "latest",
+    "angular-underscore": "*",
+    "angular-bootstrap-colorpicker": "~3.0.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.16",
+    "angular-scenario": "1.2.16"
+  }
 }

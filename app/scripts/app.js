@@ -11,7 +11,8 @@ angular.module('cyViewerApp',
         'ngSanitize',
         'ngRoute',
         'ui.bootstrap',
-        'angular-underscore'
+        'angular-underscore',
+        'colorpicker.module'
     ])
     .config(function ($routeProvider) {
         $routeProvider

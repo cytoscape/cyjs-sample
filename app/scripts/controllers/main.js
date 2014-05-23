@@ -6,10 +6,10 @@ angular.module('cyViewerApp')
 
         var NETWORK_SECTION_ID = '#network';
 
-        var NETWORK_FILE = 'yeast_intact.cyjs';
-        var VISUAL_STYLE_FILE = 'yeast_intact_vs.json';
+        var NETWORK_FILE = 'TCACycle.cyjs';
+        var VISUAL_STYLE_FILE = 'kegg.json';
 
-        var DEFAULT_VISUAL_STYLE = 'PSIMI 25 Style';
+        var DEFAULT_VISUAL_STYLE = 'KEGG Style';
 
         // Application global objects
         $scope.networks = {};
@@ -19,6 +19,8 @@ angular.module('cyViewerApp')
         $scope.currentVS = DEFAULT_VISUAL_STYLE;
 
         $scope.browserState = {show: true};
+        $scope.overlayState = {show: true};
+        $scope.bg = {color: '#FFFFFF'};
 
         $scope.columnNames = [];
 
@@ -42,9 +44,9 @@ angular.module('cyViewerApp')
                 VisualStyles.query({filename: VISUAL_STYLE_FILE}, function(vs) {
 
                     init(vs);
-//                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
                     dropSupport();
                     setEventListeners();
+                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
                 });
             }
         };
@@ -172,6 +174,14 @@ angular.module('cyViewerApp')
 
         $scope.toggleTableBrowser = function() {
             $scope.browserState.show = !$scope.browserState.show;
+        };
+
+        $scope.toggleOverlay = function() {
+            $scope.overlayState.show = !$scope.overlayState.show;
+        };
+
+        $scope.fit = function() {
+            $scope.cy.fit();
         };
 
         //
