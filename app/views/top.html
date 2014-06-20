@@ -1,0 +1,18 @@
+<div class="top">
+	<h1>GraphShare</h1>
+	<p>Easy way to share your graph data</p>
+
+	<form class="form-inline" role="form" ng-submit="visualize(networkUrl, styleUrl)">
+  		<div class="form-group">
+    		<label class="sr-only" for="networkUrl">Cytoscape JSON</label>
+    		<input type="url" class="form-control" 
+    			id="networkUrl" placeholder="Enter Network URL" ng-model="networkUrl">
+  		</div>
+  		<div class="form-group">
+    		<label class="sr-only" for="styleUrl">Style JSON</label>
+    		<input type="url" class="form-control" id="styleUrl" 
+    			placeholder="Enter Style URL" ng-model="styleUrl">
+  		</div>
+  		<button type="submit" class="btn btn-default">Visualize!</button>
+	</form>
+</div>

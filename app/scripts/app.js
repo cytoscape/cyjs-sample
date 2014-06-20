@@ -4,23 +4,31 @@
 //
 'use strict';
 
-angular.module('cyViewerApp',
-    [
-        'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'ngRoute',
-        'ui.bootstrap',
-        'angular-underscore',
-        'colorpicker.module'
-    ])
-    .config(function ($routeProvider) {
+angular.module('cyViewerApp', [
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute',
+    'ui.bootstrap',
+    'angular-underscore',
+    'colorpicker.module'
+])
+    .config(function($routeProvider, $locationProvider) {
+
+        // Set location style.
+        $locationProvider.html5Mode(true).hashPrefix('!');
+        
+        // Routing
         $routeProvider
             .when('/', {
+                templateUrl: 'views/top.html',
+                controller: 'TopCtrl'
+            })
+            .when('/view', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
-            })
-            .otherwise({
-                redirectTo: '/'
             });
+            // .otherwise({
+            //     redirectTo: '/'
+            // });
     });
