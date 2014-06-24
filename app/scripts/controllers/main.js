@@ -2,14 +2,14 @@
 'use strict';
 
 angular.module('cyViewerApp')
-    .controller('MainCtrl', function ($scope, $http, Network, VisualStyles) {
+    .controller('MainCtrl', function ($scope, $http, $routeParams, Network, VisualStyles) {
 
         var NETWORK_SECTION_ID = '#network';
 
         var NETWORK_FILE = 'TCACycle.cyjs';
         var VISUAL_STYLE_FILE = 'kegg.json';
 
-        var DEFAULT_VISUAL_STYLE = 'KEGG Style';
+        var DEFAULT_VISUAL_STYLE = 'default';
 
         // Application global objects
         $scope.networks = {};
@@ -24,7 +24,16 @@ angular.module('cyViewerApp')
 
         $scope.columnNames = [];
 
-        console.log('Network rendering start...');
+        console.log('Network rendering start... ' + $routeParams.url);
+        console.log('@@@Style3: ' + $scope.encodedStyle);
+        NETWORK_FILE = $routeParams.url;
+
+        if($scope.encodedStyle === undefined) {
+            VISUAL_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
+        } else {
+            VISUAL_STYLE_FILE = $scope.encodedStyle;
+            console.log('@@@Style SET: ' + VISUAL_STYLE_FILE);
+        }
 
         // Basic settings for the Cytoscape window
         var options = {
@@ -41,7 +50,10 @@ angular.module('cyViewerApp')
                 $scope.cy = this;
                 $scope.cy.load(networkData.elements);
 
-                VisualStyles.query({filename: VISUAL_STYLE_FILE}, function(vs) {
+                console.log('@@@@@@$$$$$$########## ' + VISUAL_STYLE_FILE);
+
+                VisualStyles.query({styleUrl: VISUAL_STYLE_FILE}, function(vs) {
+                    console.log('$$$$$$########## ' + vs);
 
                     init(vs);
                     dropSupport();
@@ -196,7 +208,7 @@ angular.module('cyViewerApp')
 
 
         // Start loading...
-        var networkData = Network.get({filename: NETWORK_FILE}, function () {
+        var networkData = Network.get({networkUrl: NETWORK_FILE}, function () {
             angular.element(NETWORK_SECTION_ID).cytoscape(options);
         });
     });

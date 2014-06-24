@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('cyViewerApp')
-    .controller('TopCtrl', function($scope, $http, $location) {
+    .controller('TopCtrl', function($scope, $rootScope, $http, $location) {
 
-        console.log('TOP controller called.=================');
         $scope.visualize = function(networkUrl, styleUrl) {
             console.log('NET ================= ' + networkUrl);
             console.log('STYLE ================= ' + styleUrl);
-            $location.path('/view');
+            var encodedNetworkUrl = encodeURIComponent(networkUrl);
+            $rootScope.encodedStyle = encodeURIComponent(styleUrl);
+            $location.path('/' + encodedNetworkUrl);
         };
-
     });

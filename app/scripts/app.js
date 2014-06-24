@@ -24,7 +24,7 @@ angular.module('cyViewerApp', [
                 templateUrl: 'views/top.html',
                 controller: 'TopCtrl'
             })
-            .when('/view', {
+            .when('/:url', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             });

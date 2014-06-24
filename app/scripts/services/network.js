@@ -9,8 +9,6 @@
  */
 angular.module('cyViewerApp')
     .factory('Network', ['$resource', function ($resource) {
-
-        return $resource('data/:filename', {filename: '@filename'});
-
-      }]
-    );
+        return $resource('/view/:networkUrl');
+    }]
+);

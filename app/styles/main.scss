@@ -22,23 +22,24 @@ nav {
   background-color: rgba(0, 0, 0, 0.0);
   height: 60px;
   z-index: 1000;
-  color: #FFFFFF !important;
+  color: #FFFFFF;
 }
 .navbar {
   background-color: rgba(0, 0, 0, 0.0);
   padding-top: 5px;
   border: none;
-  color: #dddddd !important;
+  color: #dddddd;
 }
 
 .navbar-brand {
   font-size: 32px;
   font-weight: 100;
-  color: #dddddd !important;
+  color: #dddddd;
 }
 
 #vs-selector, #network-selector {
   width: 400px;
+  color: blue !important;
 }
 
 
@@ -142,7 +143,7 @@ tbody tr td {
   font-weight: 100;
   border: solid #dddddd 1px;
   border-radius: 8px;
-  color: #FFFFFF;
+  color: red;
   background-color: rgba(55,55,55,0.85);
   position: fixed;
   top: 10px;
