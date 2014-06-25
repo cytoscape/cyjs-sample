@@ -5,9 +5,16 @@ angular.module('cyViewerApp')
 
         $scope.visualize = function(networkUrl, styleUrl) {
             console.log('NET ================= ' + networkUrl);
-            console.log('STYLE ================= ' + styleUrl);
             var encodedNetworkUrl = encodeURIComponent(networkUrl);
-            $rootScope.encodedStyle = encodeURIComponent(styleUrl);
+
+            // Validation
+
+
+            if(!styleUrl) {
+                console.log('STYLE UNDEF ================= ' + styleUrl);
+            } else {
+                $rootScope.encodedStyle = encodeURIComponent(styleUrl);
+            }
             $location.path('/' + encodedNetworkUrl);
         };
     });

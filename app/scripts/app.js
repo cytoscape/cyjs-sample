@@ -11,12 +11,13 @@ angular.module('cyViewerApp', [
     'ngRoute',
     'ui.bootstrap',
     'angular-underscore',
-    'colorpicker.module'
+    'colorpicker.module',
+    'angularSpinner'
 ])
-    .config(function($routeProvider, $locationProvider) {
+    .config(function($routeProvider) {
 
         // Set location style.
-        $locationProvider.html5Mode(true).hashPrefix('!');
+//        $locationProvider.html5Mode(true).hashPrefix('!');
         
         // Routing
         $routeProvider
@@ -24,11 +25,15 @@ angular.module('cyViewerApp', [
                 templateUrl: 'views/top.html',
                 controller: 'TopCtrl'
             })
+            .when('/error', {
+                templateUrl: 'views/top.html',
+                controller: 'TopCtrl'
+            })
             .when('/:url', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
+            })
+            .otherwise({
+                 redirectTo: '/'
             });
-            // .otherwise({
-            //     redirectTo: '/'
-            // });
     });

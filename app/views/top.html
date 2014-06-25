@@ -1,18 +1,57 @@
 <div class="top">
-	<h1>GraphShare</h1>
-	<p>Easy way to share your graph data</p>
+    <div class="container">
+        <div class="inner">
+            <h1>GraphShare</h1>
 
-	<form class="form-inline" role="form" ng-submit="visualize(networkUrl, styleUrl)">
-  		<div class="form-group">
-    		<label class="sr-only" for="networkUrl">Cytoscape JSON</label>
-    		<input type="url" class="form-control" 
-    			id="networkUrl" placeholder="Enter Network URL" ng-model="networkUrl">
-  		</div>
-  		<div class="form-group">
-    		<label class="sr-only" for="styleUrl">Style JSON</label>
-    		<input type="url" class="form-control" id="styleUrl" 
-    			placeholder="Enter Style URL" ng-model="styleUrl">
-  		</div>
-  		<button type="submit" class="btn btn-default">Visualize!</button>
-	</form>
+            <p>An easy way to visualize your graph data</p>
+
+            <form class="form-horizontal" role="form" ng-submit="visualize(networkUrl, styleUrl)">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="networkUrl">Graph File URL:</label>
+                    </div>
+                    <div class="row">
+                        <input autofocus autocomplete="on" required list="networks" type="url" class="form-control"
+                               id="networkUrl" placeholder="Enter Network URL" ng-model="networkUrl">
+                        <datalist id="networks">
+                            <option value="https://dl.dropboxusercontent.com/u/161833/gal.json"
+                                    label="Sample Yeast"></option>
+
+                        </datalist>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label for="styleUrl">Style File URL (Optional):</label>
+                    </div>
+                    <div class="row">
+                        <input type="url" class="form-control" id="styleUrl"
+                               placeholder="Enter Style URL" ng-model="styleUrl">
+                    </div>
+                    <div class="row buttons">
+                        <button type="submit" class="btn btn-success">Visualize!</button>
+                    </div>
+                </div>
+            </form>
+            <ul class="buttons">
+                <li><a href="/about" class="button">About</a></li>
+                <li><a href="#" class="button">Help</a></li>
+                <li><a href="http://www.cytoscape.org/" class="button">Cytoscape</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+        <span class="copyright">
+            &copy;2014 Keiichiro Ono  UCSD Ideker Lab.  All rights reserved.
+        </span>
+    </footer>
 </div>
+<script>
+    $(function () {
+        $(window).resize(function () {
+            $('.top').height($(window).height());
+        });
+        $(window).resize();
+    });
+</script>

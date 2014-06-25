@@ -11,6 +11,7 @@ $icon-font-path: "../bower_components/sass-bootstrap/fonts/";
 
 /* Space out content a bit */
 html, body {
+  font-face: "helvatica neu";
   width: 100%;
   height: 100%;
   margin: 0;
@@ -24,6 +25,7 @@ nav {
   z-index: 1000;
   color: #FFFFFF;
 }
+
 .navbar {
   background-color: rgba(0, 0, 0, 0.0);
   padding-top: 5px;
@@ -42,14 +44,86 @@ nav {
   color: blue !important;
 }
 
-
 .top {
-  padding: 50px;
-  h1: {
-    text-aligh: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  background: url("../images/small_fit.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .inner {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  p, h1 {
+    text-align: center;
+  }
+  p {
+    font-size: 1em;
+  }
+  h1 {
+    padding-top: 10%;
+    font-weight: 100;
+    color: #505050;
+    font-size: 10em;
+    width: 100%;
+  }
+  label {
+    margin-bottom: 10px;
+  }
+
+  .buttons {
+    padding-top: 30px;
+  }
+  ul.buttons {
+    cursor: default;
+  }
+
+  ul.buttons:last-child {
+    margin-bottom: 0;
+  }
+
+  ul.buttons li {
+    display: inline-block;
+    padding: 0 0 0 1.5em;
+  }
+
+  ul.buttons li:first-child {
+    padding: 0;
+  }
+
+  ul.buttons.vertical li {
+    display: block;
+    padding: 1.5em 0 0 0;
+  }
+
+  ul.buttons.vertical li:first-child {
+    padding: 0;
+  }
+
+  .button {
+    background: rgba(255,255,255,0.6);
+    border: solid 1px #666666;
+    color: inherit;
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: 200;
+    min-width: 12em;
+    padding: 0.6em 0;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .button:hover {
+    background: rgba(10, 230, 206, 0.7);
+    border: solid 1px;
   }
 }
-
 
 #network {
   z-index: 0;
@@ -75,7 +149,7 @@ nav {
   overflow-y: scroll;
   padding: 20px;
   color: #555555;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   position: fixed;
   left: 0;
   bottom: 0;
@@ -110,10 +184,11 @@ tbody tr td {
   width: 100%;
   z-index: 200;
 }
+
 .custom-button {
   border: solid #666666 2px;
   color: #555555;
-  background-color: rgba(0,0,0,0.0);
+  background-color: rgba(0, 0, 0, 0.0);
   text-align: center;
   font-size: 30px;
   z-index: 200;
@@ -134,7 +209,6 @@ tbody tr td {
   width: 52px;
 }
 
-
 .overlay {
 
   overflow-x: none;
@@ -144,7 +218,7 @@ tbody tr td {
   border: solid #dddddd 1px;
   border-radius: 8px;
   color: red;
-  background-color: rgba(55,55,55,0.85);
+  background-color: rgba(55, 55, 55, 0.85);
   position: fixed;
   top: 10px;
   right: 10px;
@@ -187,10 +261,27 @@ tbody tr td {
 }
 
 /* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+//.footer {
+//  padding-top: 19px;
+//  color: #777;
+//  border-top: 1px solid #e5e5e5;
+//}
+footer {
+  font-weight: 100;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: #505050;
+  padding: 2em;
+  text-align: center;
+}
+
+footer .copyright {
+  font-size: 1.5em;
+}
+
+footer .copyright a {
+  color: inherit;
 }
 
 .container-narrow > hr {

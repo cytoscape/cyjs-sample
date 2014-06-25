@@ -6,8 +6,8 @@ angular.module('cyViewerApp')
 
         var NETWORK_SECTION_ID = '#network';
 
-        var NETWORK_FILE = 'TCACycle.cyjs';
-        var VISUAL_STYLE_FILE = 'kegg.json';
+        var NETWORK_FILE;
+        var VISUAL_STYLE_FILE;
 
         var DEFAULT_VISUAL_STYLE = 'default';
 
@@ -25,14 +25,17 @@ angular.module('cyViewerApp')
         $scope.columnNames = [];
 
         console.log('Network rendering start... ' + $routeParams.url);
-        console.log('@@@Style3: ' + $scope.encodedStyle);
+        console.log('@@@Style4: ' + $scope.encodedStyle);
+        console.log('@@@Style test: ' + (typeof $scope.encodedStyle));
         NETWORK_FILE = $routeParams.url;
 
-        if($scope.encodedStyle === undefined) {
+        var styleLocation = $scope.encodedStyle;
+        console.log('@@@Style get: ' + styleLocation);
+        if(!styleLocation) {
             VISUAL_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
         } else {
             VISUAL_STYLE_FILE = $scope.encodedStyle;
-            console.log('@@@Style SET: ' + VISUAL_STYLE_FILE);
+            console.log('@@@Style SET4: ' + VISUAL_STYLE_FILE);
         }
 
         // Basic settings for the Cytoscape window
@@ -50,8 +53,6 @@ angular.module('cyViewerApp')
                 $scope.cy = this;
                 $scope.cy.load(networkData.elements);
 
-                console.log('@@@@@@$$$$$$########## ' + VISUAL_STYLE_FILE);
-
                 VisualStyles.query({styleUrl: VISUAL_STYLE_FILE}, function(vs) {
                     console.log('$$$$$$########## ' + vs);
 
@@ -59,6 +60,7 @@ angular.module('cyViewerApp')
                     dropSupport();
                     setEventListeners();
                     $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE].style).update();
+                    angular.element('.loading').remove();
                 });
             }
         };

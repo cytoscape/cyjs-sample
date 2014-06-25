@@ -22,6 +22,8 @@ module.exports = function(config) {
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/bower_components/angular-underscore/angular-underscore.js',
       'app/bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
+      'app/bower_components/spin.js/spin.js',
+      'app/bower_components/angular-spinner/angular-spinner.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
