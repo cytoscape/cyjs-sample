@@ -131,6 +131,15 @@ angular.module('cyViewerApp')
             $scope.networkNames.push(networkName);
 
             // Get column names
+            setColumnNames();
+        }
+
+        function setColumnNames() {
+
+            $scope.columnNames = [];
+            $scope.edgeColumnNames = [];
+            $scope.networkColumnNames = [];
+
             var oneNode = $scope.nodes[0];
             for(var colName in oneNode.data) {
                 $scope.columnNames.push(colName);
@@ -143,7 +152,6 @@ angular.module('cyViewerApp')
                 $scope.networkColumnNames.push(netColName);
             }
         }
-
 
         function reset() {
             $scope.selectedNodes = {};
@@ -193,13 +201,6 @@ angular.module('cyViewerApp')
             });
         }
 
-        $scope.switchNetwork = function (networkName) {
-            $scope.currentNetwork = networkName;
-            var network = $scope.networks[networkName];
-            $scope.cy.load(network.elements);
-            $scope.currentNetworkData = network;
-            reset();
-        };
 
         $scope.toggleTableBrowser = function() {
             $scope.browserState.show = !$scope.browserState.show;
@@ -245,6 +246,17 @@ angular.module('cyViewerApp')
             $scope.cy.style().fromJson(vs).update();
             // Set current title
             $scope.currentVS = vsName;
+        };
+
+        $scope.switchNetwork = function () {
+            $scope.currentNetwork = $scope.selectedNetworkName;
+            var network = $scope.networks[$scope.selectedNetworkName];
+            $scope.cy.load(network.elements);
+            $scope.currentNetworkData = network;
+            reset();
+            $scope.nodes = network.elements.nodes;
+            $scope.edges = network.elements.edges;
+            setColumnNames();
         };
 
         // Start loading...

@@ -5,14 +5,19 @@
 </div>
 
 <div class="summary" ng-show="overlayState.show">
-    <h3>Current Network:</h3>
-    <select class="form-control" id="network-selector">
-        <option ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">
+    <h3>Network:</h3>
+    <select class="form-control" id="network-selector" ng-change="switchNetwork()" ng-model="selectedNetworkName">
+        <option ng-repeat="networkName in networkNames">
             {{ networkName }}
         </option>
     </select>
+    <!--<select class="form-control" id="network-selector">-->
+        <!--<option ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">-->
+            <!--{{ networkName }}-->
+        <!--</option>-->
+    <!--</select>-->
 
-    <h3>Visual Style Selected:</h3>
+    <h3>Visual Style:</h3>
     <select class="form-control" id="vs-selector" ng-change="switchVS()" ng-model="style">
         <option ng-repeat="style in visualStyles">
             {{ style.title }}
