@@ -1,8 +1,9 @@
-/*global _ */
-'use strict';
+/*global _, angular */
 
 angular.module('cyViewerApp')
     .controller('MainCtrl', function ($scope, $http, $location, $routeParams, Network, VisualStyles) {
+
+        'use strict';
 
         var NETWORK_SECTION_ID = '#network';
 
@@ -47,7 +48,6 @@ angular.module('cyViewerApp')
 
         // Basic settings for the Cytoscape window
         var options = {
-
             showOverlay: false,
             minZoom: 0.01,
             maxZoom: 200,
@@ -124,12 +124,12 @@ angular.module('cyViewerApp')
             $scope.nodes = networkData.elements.nodes;
             $scope.edges = networkData.elements.edges;
             initVisualStyleCombobox(vs);
+
             // Set network name
             var networkName = networkData.data.name;
-            $scope.currentNetwork = networkData.data.name;
             $scope.networks[networkName] = networkData;
             $scope.networkNames.push(networkName);
-
+            $scope.currentNetwork = networkData.data.name;
             // Get column names
             setColumnNames();
         }
@@ -249,8 +249,7 @@ angular.module('cyViewerApp')
         };
 
         $scope.switchNetwork = function () {
-            $scope.currentNetwork = $scope.selectedNetworkName;
-            var network = $scope.networks[$scope.selectedNetworkName];
+            var network = $scope.networks[$scope.currentNetwork];
             $scope.cy.load(network.elements);
             $scope.currentNetworkData = network;
             reset();
