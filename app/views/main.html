@@ -1,63 +1,29 @@
 <div id="network" ng-style="{'background-color': bg.color}"></div>
 
 <div class="loading">
-    <span us-spinner="{radius:60, width:8, length: 16}"></span>
+    <span us-spinner="{radius:50, width:5, length: 126}"></span>
 </div>
 
-<div class="overlay" ng-show="overlayState.show">
-    <h4>{{currentNetwork}}</h4>
-    <ul>
-        <li>Number of Nodes: {{numNodes}}</li>
-        <li>Number of Edges: {{numEdges}}</li>
-    </ul>
+<div class="summary" ng-show="overlayState.show">
+    <h3>Current Network:</h3>
+    <select class="form-control" id="network-selector">
+        <option ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">
+            {{ networkName }}
+        </option>
+    </select>
 
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-            <li class="dropdown" id="vs-selector">
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    <strong>Visual Style:</strong> {{ currentVS }}<b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li ng-repeat="style in visualStyles" ng-click="switchVS(style.title)">
-                        {{ style.title }}
-                    </li>
-                </ul>
-            </li>
-            <li class="dropdown" id="network-selector">
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    {{ currentNetwork }}<b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li ng-repeat="networkName in networkNames" ng-click="switchNetwork(networkName)">
-                        {{ networkName }}
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-</div>
-
-<div class="button-bar">
-    <div class="custom-button" ng-click="toggleTableBrowser()">
-        <span class="glyphicon glyphicon-list-alt"></span>
-    </div>
-    <div class="custom-button" ng-click="toggleOverlay()">
-        <span class="glyphicon glyphicon-info-sign"></span>
-    </div>
-    <div class="custom-button" ng-click="fit()">
-        <span class="glyphicon glyphicon-resize-full"></span>
-    </div>
-    <div class="custom-button" colorpicker colorpicker-position="top" ng-model="bg.color">
-        <span class="glyphicon glyphicon-tint"></span>
-    </div>
+    <h3>Visual Style Selected:</h3>
+    <select class="form-control" id="vs-selector" ng-change="switchVS()" ng-model="style">
+        <option ng-repeat="style in visualStyles">
+            {{ style.title }}
+        </option>
+    </select>
 </div>
 
 <div ng-show="browserState.show" class="table-browser">
     <div id="table-view">
         <tabset justified="true">
             <tab heading="Node">
-
                 <table class="table table-striped table-bordered table-hover">
 
                     <thead>
@@ -78,8 +44,69 @@
                     </tbody>
                 </table>
             </tab>
-            <tab heading="Edge">Edge Table</tab>
-            <tab heading="Network">Network Table</tab>
+            <tab heading="Edge">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td>SUID</td>
+                        <td ng-repeat="columnName in edgeColumnNames">
+                            {{columnName}}
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody data-ng-repeat="edge in selectedEdges">
+                    <tr>
+                        <td>{{ edge.id() }}</td>
+                        <td ng-repeat="colName in edgeColumnNames">
+                            {{edge.data(colName)}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </tab>
         </tabset>
+    </div>
+</div>
+
+<div class="home-button" ng-click="toggleToolbar()" style="clear:both;">
+    <span class="glyphicon glyphicon-sort"></span>
+</div>
+<div class="command-bar" ng-show="toolbarState.show">
+    <div class="icon-button orange" data-toggle="modal" data-target="#share">
+        <span class="glyphicon glyphicon-share-alt"></span>
+    </div>
+    <div class="icon-button" ng-click="toggleTableBrowser()">
+        <span class="glyphicon glyphicon-list-alt"></span>
+    </div>
+    <div class="icon-button" ng-click="toggleOverlay()">
+        <span class="glyphicon glyphicon-info-sign"></span>
+    </div>
+    <div class="icon-button" ng-click="fit()">
+        <span class="glyphicon glyphicon-resize-full"></span>
+    </div>
+    <div class="icon-button" colorpicker colorpicker-position="left" ng-model="bg.color">
+        <span class="glyphicon glyphicon-tint"></span>
+    </div>
+</div>
+
+<div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Share This Visualization</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="url" autofocus class="form-control" id="shareUrl" value="{{currentLocation}}">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="shortenUrl()">Shorten URL</button>
+            </div>
+        </div>
     </div>
 </div>

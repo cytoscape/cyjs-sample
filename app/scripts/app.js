@@ -9,6 +9,7 @@ angular.module('cyViewerApp', [
     'ngResource',
     'ngSanitize',
     'ngRoute',
+    'ngAnimate',
     'ui.bootstrap',
     'angular-underscore',
     'colorpicker.module',
@@ -16,9 +17,6 @@ angular.module('cyViewerApp', [
 ])
     .config(function($routeProvider) {
 
-        // Set location style.
-//        $locationProvider.html5Mode(true).hashPrefix('!');
-        
         // Routing
         $routeProvider
             .when('/', {
