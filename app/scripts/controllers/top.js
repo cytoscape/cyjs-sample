@@ -3,6 +3,8 @@
 angular.module('cyViewerApp')
     .controller('TopCtrl', function($scope, $rootScope, $http, $location) {
 
+        $scope.advancedMenu = {show: false};
+
         $scope.visualize = function(networkUrl, styleUrl) {
             console.log('NET ================= ' + networkUrl);
             var encodedNetworkUrl = encodeURIComponent(networkUrl);
@@ -22,4 +24,9 @@ angular.module('cyViewerApp')
             console.log('GIST NET2 ================= ' + gistId);
             $location.path('/gists/' + gistId);
         };
+
+        $scope.toggleAdvancedMenu = function() {
+            $scope.advancedMenu.show = !$scope.advancedMenu.show;
+        };
+
     });

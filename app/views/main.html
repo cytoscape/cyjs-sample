@@ -68,23 +68,26 @@
     </div>
 </div>
 
-<div class="home-button" ng-click="toggleToolbar()" style="clear:both;">
+<div class="home-button" ng-click="toggleToolbar()" style="clear:both;"
+     tooltip-placement="left" tooltip="Show/Hide Toolbar">
     <span class="glyphicon glyphicon-sort"></span>
 </div>
 <div class="command-bar" ng-show="toolbarState.show">
-    <div class="icon-button orange" data-toggle="modal" data-target="#share">
+    <div class="icon-button orange" data-toggle="modal" data-target="#share"
+         ng-click="encodeUrl()" tooltip-placement="left" tooltip="Share!">
         <span class="glyphicon glyphicon-share-alt"></span>
     </div>
-    <div class="icon-button" ng-click="toggleTableBrowser()">
+    <div class="icon-button" ng-click="toggleTableBrowser()" tooltip-placement="left" tooltip="Show/Hide Table">
         <span class="glyphicon glyphicon-list-alt"></span>
     </div>
-    <div class="icon-button" ng-click="toggleOverlay()">
+    <div class="icon-button" ng-click="toggleOverlay()" tooltip-placement="left" tooltip="Show/Hide Selector">
         <span class="glyphicon glyphicon-info-sign"></span>
     </div>
-    <div class="icon-button" ng-click="fit()">
+    <div class="icon-button" ng-click="fit()" tooltip-placement="left" tooltip="Fit to window">
         <span class="glyphicon glyphicon-resize-full"></span>
     </div>
-    <div class="icon-button" colorpicker colorpicker-position="left" ng-model="bg.color">
+    <div class="icon-button" colorpicker colorpicker-position="left" ng-model="bg.color" tooltip-placement="left"
+         tooltip="Set Background Color">
         <span class="glyphicon glyphicon-tint"></span>
     </div>
 </div>
@@ -99,7 +102,7 @@
             <div class="modal-body">
                 <form role="form">
                     <div class="form-group">
-                        <input type="url" autofocus class="form-control" id="shareUrl" value="{{currentLocation}}">
+                        <input type="url" autofocus class="form-control" id="shareUrl" value="{{encodedUrl}}">
                     </div>
                 </form>
             </div>

@@ -3,56 +3,65 @@
         <div class="inner">
             <h1>GraphShare</h1>
 
-            <p>An easy way to visualize your graph data</p>
+            <p class="lead">An easy way to visualize your graph data</p>
 
-            <form class="form-horizontal" role="form" ng-submit="visualize(networkUrl, styleUrl)">
-                <div class="form-group">
-                    <div class="row">
-                        <label for="networkUrl">Graph File URL:</label>
-                    </div>
-                    <div class="row">
-                        <input autofocus autocomplete="on" required list="networks" type="url" class="form-control"
-                               id="networkUrl" placeholder="Enter Network URL" ng-model="networkUrl">
-                        <datalist id="networks">
-                            <option value="https://dl.dropboxusercontent.com/u/161833/gal.json"
-                                    label="Sample Yeast"></option>
-
-                        </datalist>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label for="styleUrl">Style File URL (Optional):</label>
-                    </div>
-                    <div class="row">
-                        <input type="url" class="form-control" id="styleUrl"
-                               placeholder="Enter Style URL" ng-model="styleUrl">
-                    </div>
-                    <div class="row buttons">
-                        <button type="submit" class="btn btn-success">Visualize!</button>
-                    </div>
-                </div>
-            </form>
-
-            <form class="form-horizontal" role="form" ng-submit="visualizeGist(gistId)">
-                <div class="form-group">
-                    <div class="row">
-                        <label for="gistId">Or, Gist URL:</label>
-                    </div>
-                    <div class="row">
-                        <input type="number" class="form-control" id="gistId"
-                               placeholder="Enter Gist URL" ng-model="gistId">
-                    </div>
-                    <div class="row buttons">
-                        <button type="submit" class="btn btn-warning">Visualize Gist!</button>
-                    </div>
-                </div>
-            </form>
             <ul class="buttons">
                 <li><a href="#" class="button">About</a></li>
                 <li><a href="#" class="button">Help</a></li>
                 <li><a href="http://www.cytoscape.org/" class="button">Cytoscape</a></li>
             </ul>
+
+            <tabset justified="true">
+                <tab heading="Public Files">
+                    <div class="tabpane">
+                        <form class="form-horizontal" role="form" ng-submit="visualize(networkUrl, styleUrl)">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="networkUrl">Graph URL</label>
+
+                                <div class="col-sm-9">
+                                    <input autofocus autocomplete="on" required list="networks" type="url"
+                                           class="form-control"
+                                           id="networkUrl" placeholder="Enter Network File URL" ng-model="networkUrl">
+                                    <datalist id="networks">
+                                        <option value="https://dl.dropboxusercontent.com/u/161833/gal.json"
+                                                label="Sample Yeast"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="styleUrl">Style URL (Optional)</label>
+
+                                <div class="col-sm-7">
+                                    <input type="url" class="form-control" id="styleUrl"
+                                           placeholder="Enter Style URL" ng-model="styleUrl">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-success">Visualize</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </tab>
+                <tab heading="Gists">
+                    <div class="tabpane">
+                        <form class="form-horizontal" role="form" ng-submit="visualizeGist(gistId)">
+                            <div class="form-group">
+                                <label for="gistId" class="col-sm-2 control-label">Gist ID</label>
+
+                                <div class="col-sm-7">
+                                    <input class="form-control" id="gistId" placeholder="Enter Gist ID"
+                                           ng-model="gistId">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-warning">Visualize Gist</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </tab>
+            </tabset>
+
+
         </div>
     </div>
     <!-- Footer -->

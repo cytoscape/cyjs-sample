@@ -19,6 +19,11 @@ html, body {
   background-color: #ffffff;
 }
 
+.tooltip-inner {
+  color: #FFFFFF;
+  padding: 15px;
+}
+
 nav {
   background-color: rgba(0, 0, 0, 0.0);
   height: 60px;
@@ -42,6 +47,10 @@ nav {
 #vs-selector, #network-selector {
   width: 100% !important;
   color: #444444 !important;
+}
+
+.tabpane {
+  padding: 30px;
 }
 
 .top {
@@ -79,6 +88,7 @@ nav {
 
   .buttons {
     padding-top: 30px;
+    padding-bottom: 30px;
   }
   ul.buttons {
     cursor: default;
@@ -248,7 +258,7 @@ tbody tr td {
 
 .summary {
   overflow-x: none;
-  overflow-y: scroll !important;
+  overflow-y: none !important;
   font-size: 18px;
   font-weight: 200;
   color: #555555;
