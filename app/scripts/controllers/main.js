@@ -4,7 +4,7 @@ angular.module('cyViewerApp')
     .controller('MainCtrl', function ($scope, $http) {
 
         var NETWORK_FILE = 'data/gal.cyjs';
-        var VISUAL_STYLE_FILE = 'data/galVS.json';
+        var VISUAL_STYLE_FILE = 'data/galvs.json';
 
         var DEFAULT_VISUAL_STYLE = 'default';
 
