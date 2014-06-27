@@ -1,7 +1,7 @@
 /*global _, angular */
 
 angular.module('cyViewerApp')
-    .controller('MainCtrl', function ($scope, $http, $location, $routeParams, Network, VisualStyles) {
+    .controller('MainCtrl', function ($scope, $http, $location, $routeParams, Network, VisualStyles, Gist) {
 
         'use strict';
 
@@ -11,6 +11,8 @@ angular.module('cyViewerApp')
         var VISUAL_STYLE_FILE;
 
         var DEFAULT_VISUAL_STYLE = 'default';
+
+        var gistId = $routeParams.id;
 
         // Application global objects
         $scope.networks = {};
@@ -32,6 +34,7 @@ angular.module('cyViewerApp')
 
         $scope.currentLocation = $location.absUrl();
 
+        console.log('GistID: ' + gistId);
         console.log('Network rendering start... ' + $routeParams.url);
         console.log('@@@Style4: ' + $scope.encodedStyle);
         console.log('@@@Style test: ' + (typeof $scope.encodedStyle));
@@ -259,8 +262,23 @@ angular.module('cyViewerApp')
         };
 
         // Start loading...
-        var networkData = Network.get({networkUrl: NETWORK_FILE}, function () {
-            angular.element(NETWORK_SECTION_ID).cytoscape(options);
-            $scope.currentNetworkData = networkData;
-        });
+        var networkData = null;
+        if(!gistId) {
+            networkData = Network.get({networkUrl: NETWORK_FILE}, function () {
+                angular.element(NETWORK_SECTION_ID).cytoscape(options);
+                $scope.currentNetworkData = networkData;
+            });
+        } else {
+            console.log('GIST!!!!!!!!!!!!!!!!!');
+            Gist.get({gistId: gistId}, function (gistData) {
+                var files = gistData.files;
+                // TODO: parse first one only?
+                var serializedNetwork = null;
+                _.each(files, function(targetFile) {
+                    serializedNetwork = targetFile.content;
+                });
+                networkData = JSON.parse(serializedNetwork);
+                angular.element(NETWORK_SECTION_ID).cytoscape(options);
+            });
+        }
     });

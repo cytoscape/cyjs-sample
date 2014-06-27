@@ -17,4 +17,9 @@ angular.module('cyViewerApp')
             }
             $location.path('/' + encodedNetworkUrl);
         };
+
+        $scope.visualizeGist = function (gistId) {
+            console.log('GIST NET2 ================= ' + gistId);
+            $location.path('/gists/' + gistId);
+        };
     });

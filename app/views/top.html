@@ -33,8 +33,23 @@
                     </div>
                 </div>
             </form>
+
+            <form class="form-horizontal" role="form" ng-submit="visualizeGist(gistId)">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="gistId">Or, Gist URL:</label>
+                    </div>
+                    <div class="row">
+                        <input type="number" class="form-control" id="gistId"
+                               placeholder="Enter Gist URL" ng-model="gistId">
+                    </div>
+                    <div class="row buttons">
+                        <button type="submit" class="btn btn-warning">Visualize Gist!</button>
+                    </div>
+                </div>
+            </form>
             <ul class="buttons">
-                <li><a href="/about" class="button">About</a></li>
+                <li><a href="#" class="button">About</a></li>
                 <li><a href="#" class="button">Help</a></li>
                 <li><a href="http://www.cytoscape.org/" class="button">Cytoscape</a></li>
             </ul>
