@@ -221,33 +221,48 @@ angular.module('cyViewerApp')
             $scope.selectedNodes = {};
             $scope.selectedEdges = {};
 
+            $scope.cy.on('mousedown', function(event){
+                // cyTarget holds a reference to the originator
+                // of the event (core or element)
+                $scope.$apply();
+            });
+            $scope.cy.on('mouseup', function(event){
+                // cyTarget holds a reference to the originator
+                // of the event (core or element)
+                $scope.$apply();
+            });
+
             // Node selection
             $scope.cy.on('select', 'node', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function () {
-                    $scope.selectedNodes[id] = event.cyTarget;
-                });
+                $scope.selectedNodes[id] = event.cyTarget;
+//                $scope.$apply(function () {
+//                    $scope.selectedNodes[id] = event.cyTarget;
+//                });
             });
 
             $scope.cy.on('select', 'edge', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function () {
-                    $scope.selectedEdges[id] = event.cyTarget;
-                });
+                $scope.selectedEdges[id] = event.cyTarget;
+//                $scope.$apply(function () {
+//                    $scope.selectedEdges[id] = event.cyTarget;
+//                });
             });
 
             // Reset selection
             $scope.cy.on('unselect', 'node', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function () {
-                    delete $scope.selectedNodes[id];
-                });
+                delete $scope.selectedNodes[id];
+//                $scope.$apply(function () {
+//                    delete $scope.selectedNodes[id];
+//                });
             });
             $scope.cy.on('unselect', 'edge', function (event) {
                 var id = event.cyTarget.id();
-                $scope.$apply(function () {
-                    delete $scope.selectedEdges[id];
-                });
+                delete $scope.selectedEdges[id];
+//                $scope.$apply(function () {
+//                    delete $scope.selectedEdges[id];
+//                });
             });
         }
 
