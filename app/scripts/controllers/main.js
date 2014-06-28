@@ -185,7 +185,6 @@ angular.module('cyViewerApp')
             }
 
             if($routeParams.bgcolor) {
-                console.log('Original color================ ' + $routeParams.bgcolor);
                 $scope.bg.color = $routeParams.bgcolor;
             }
         }
@@ -221,49 +220,41 @@ angular.module('cyViewerApp')
             $scope.selectedNodes = {};
             $scope.selectedEdges = {};
 
-            $scope.cy.on('mousedown', function(event){
-                // cyTarget holds a reference to the originator
-                // of the event (core or element)
-                $scope.$apply();
-            });
-            $scope.cy.on('mouseup', function(event){
-                // cyTarget holds a reference to the originator
-                // of the event (core or element)
-                $scope.$apply();
-            });
+            var updateFlag = false;
 
             // Node selection
             $scope.cy.on('select', 'node', function (event) {
                 var id = event.cyTarget.id();
                 $scope.selectedNodes[id] = event.cyTarget;
-//                $scope.$apply(function () {
-//                    $scope.selectedNodes[id] = event.cyTarget;
-//                });
+                updateFlag = true;
             });
 
             $scope.cy.on('select', 'edge', function (event) {
                 var id = event.cyTarget.id();
                 $scope.selectedEdges[id] = event.cyTarget;
-//                $scope.$apply(function () {
-//                    $scope.selectedEdges[id] = event.cyTarget;
-//                });
+                updateFlag = true;
             });
 
             // Reset selection
             $scope.cy.on('unselect', 'node', function (event) {
                 var id = event.cyTarget.id();
                 delete $scope.selectedNodes[id];
-//                $scope.$apply(function () {
-//                    delete $scope.selectedNodes[id];
-//                });
+                updateFlag = true;
             });
             $scope.cy.on('unselect', 'edge', function (event) {
                 var id = event.cyTarget.id();
                 delete $scope.selectedEdges[id];
-//                $scope.$apply(function () {
-//                    delete $scope.selectedEdges[id];
-//                });
+                updateFlag = true;
             });
+
+            setInterval(function() {
+                if(updateFlag && $scope.browserState.show) {
+                    console.log('* update called');
+                    $scope.$apply();
+                    updateFlag = false;
+                }
+            }, 300);
+
         }
 
         function initVisualStyleCombobox(vs) {
