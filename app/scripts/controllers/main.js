@@ -12,7 +12,8 @@ angular.module('cyViewerApp')
         var NETWORK_SECTION_ID = '#network';
 
         // Default Visual Style file location.
-        var PRESET_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
+        var PRESET_STYLE_FILE = encodeURIComponent('http://localhost:3000/data/style.json');
+        // var PRESET_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
 
         // Default Visual Style name to be selected.
         var DEFAULT_VISUAL_STYLE_NAME = 'default';
@@ -27,10 +28,6 @@ angular.module('cyViewerApp')
         var zoomLevel = $routeParams.zoom;
         var panX = $routeParams.x;
         var panY = $routeParams.y;
-
-        console.log('PAN X: ' + panX);
-        console.log('PAN Y: ' + panY);
-        console.log('ZOOM: ' + zoomLevel);
 
         // Application global objects
         $scope.networks = {};
@@ -54,17 +51,13 @@ angular.module('cyViewerApp')
 
         console.log('GistID: ' + gistId);
         console.log('Network rendering start... ' + $routeParams.url);
-        console.log('@@@Style4: ' + $scope.encodedStyle);
-        console.log('@@@Style test: ' + (typeof $scope.encodedStyle));
         NETWORK_FILE = $routeParams.url;
 
         var styleLocation = $scope.encodedStyle;
-        console.log('@@@Style get: ' + styleLocation);
         if(!styleLocation) {
             visualStyleFile = PRESET_STYLE_FILE;
         } else {
             visualStyleFile = $scope.encodedStyle;
-            console.log('@@@Style SET4: ' + visualStyleFile);
         }
 
         // Basic settings for the Cytoscape window
@@ -169,19 +162,13 @@ angular.module('cyViewerApp')
             setColumnNames();
 
             if($routeParams.x !== undefined && $routeParams.y !== undefined) {
-                console.log('@@@@@@@@@@PAN================ ' + panX +', ' + panY);
-                console.log( $scope.cy.pan() );
                 $scope.cy.pan({
                     x: parseFloat(panX),
                     y: parseFloat(panY)
                 });
-                console.log( $scope.cy.pan() );
             }
             if($routeParams.zoom) {
-                console.log('@@@@@@@@@@ZOOM================original ' + zoomLevel );
-                console.log( $scope.cy.zoom() );
                 $scope.cy.zoom(parseFloat(zoomLevel));
-                console.log( $scope.cy.zoom() );
             }
 
             if($routeParams.bgcolor) {
@@ -190,7 +177,6 @@ angular.module('cyViewerApp')
         }
 
         function setColumnNames() {
-
             $scope.columnNames = [];
             $scope.edgeColumnNames = [];
             $scope.networkColumnNames = [];
