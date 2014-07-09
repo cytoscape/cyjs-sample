@@ -150,9 +150,7 @@ tbody tr td {
     min-width: 150px !important;
     word-break: break-all;
 }
-/*
-  Custom Buttons
-*/
+
 
 .command-bar {
     color: #555555;
@@ -187,6 +185,8 @@ tbody tr td {
         margin-top: 0;
     }
 }
+
+
 .command-bar.ng-hide-add, .command-bar.ng-hide-remove {
     -webkit-transition: all ease-out 0.8s;
     -moz-transition: all ease-out 0.8s;
@@ -214,28 +214,28 @@ tbody tr td {
     font-size: 40px;
     color: #FFFFFF;
 }
+
+/*
+  Network and VS Selector
+*/
 .summary {
     overflow-x: none;
     overflow-y: none !important;
-    font-size: 18px;
-    font-weight: 200;
+    font-size: 1em;
+    font-weight: 300;
     color: #555555;
     background-color: rgba(0, 0, 0, 0);
     position: fixed;
     top: 0;
     left: 0;
-    padding: 10px;
+    padding: 5px;
     padding-top: 0;
-    width: 450px;
+    width: 400px;
     z-index: 200;
     h3 {
-        font-weight: 300;
-        border-radius: 4px;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-bottom: 5px;
         padding-left: 5px;
-        font-size: 16px;
-        color: #666666;
+        font-size: 1em;
     }
 }
 .float-table {
@@ -310,4 +310,8 @@ footer .copyright a {
             padding: 1em;
         }
     }
+}
+
+@media screen and (max-width: 992px) {
+    
 }
