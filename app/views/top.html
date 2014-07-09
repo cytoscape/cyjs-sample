@@ -1,16 +1,32 @@
 <div class="top">
     <div class="container">
-        <div class="inner">
-            <h1>GraphShare</h1>
+        <div class="row">
+            <h1>CyNetShare</h1>
+        </div>
+        <div class="row">
+            <img id="cylogo" src="images/cy3logo_orange.svg" />
+        </div>
 
-            <p class="lead">An easy way to visualize your graph data</p>
+        <div class="row padded">
+            <p class="lead">
+                An easy way to share your network data visualizations
+            </p>
+        </div>
 
-            <ul class="buttons">
-                <li><a href="#" class="button">About</a></li>
-                <li><a href="#" class="button">Help</a></li>
-                <li><a href="http://www.cytoscape.org/" class="button">Cytoscape</a></li>
-            </ul>
+        <div class="row padded">
+            <div class="col-md-6 col-sm-12">
+                <a href="http://idekerlab.github.io/cy-net-share/" class="button">
+                        Project Web Site
+                    </a>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <a href="#" class="button">
+                        Documentation
+                    </a>
+            </div>
+        </div>
 
+        <div class="row">
             <tabset justified="true">
                 <tab heading="Public Files">
                     <div class="tabpane">
@@ -19,12 +35,9 @@
                                 <label class="col-sm-3 control-label" for="networkUrl">Graph URL</label>
 
                                 <div class="col-sm-9">
-                                    <input autofocus autocomplete="on" required list="networks" type="url"
-                                           class="form-control"
-                                           id="networkUrl" placeholder="Enter Network File URL" ng-model="networkUrl">
+                                    <input autofocus autocomplete="on" required list="networks" type="url" class="form-control" id="networkUrl" placeholder="Enter Network File URL" ng-model="networkUrl">
                                     <datalist id="networks">
-                                        <option value="https://dl.dropboxusercontent.com/u/161833/gal.json"
-                                                label="Sample Yeast"></option>
+                                        <option value="https://dl.dropboxusercontent.com/u/161833/gal.json" label="Sample Yeast"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -32,8 +45,7 @@
                                 <label class="col-sm-3 control-label" for="styleUrl">Style URL (Optional)</label>
 
                                 <div class="col-sm-7">
-                                    <input type="url" class="form-control" id="styleUrl"
-                                           placeholder="Enter Style URL" ng-model="styleUrl">
+                                    <input type="url" class="form-control" id="styleUrl" placeholder="Enter Style URL" ng-model="styleUrl">
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="submit" class="btn btn-success">Visualize</button>
@@ -49,8 +61,7 @@
                                 <label for="gistId" class="col-sm-2 control-label">Gist ID</label>
 
                                 <div class="col-sm-7">
-                                    <input class="form-control" id="gistId" placeholder="Enter Gist ID"
-                                           ng-model="gistId">
+                                    <input class="form-control" id="gistId" placeholder="Enter Gist ID" ng-model="gistId">
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="submit" class="btn btn-warning">Visualize Gist</button>
@@ -60,22 +71,26 @@
                     </div>
                 </tab>
             </tabset>
-
-
         </div>
     </div>
+
     <!-- Footer -->
-    <footer id="footer">
+    <footer>
         <span class="copyright">
-            &copy;2014 Keiichiro Ono  UCSD Ideker Lab.  Powered by Cytoscape.js.
+            <p>
+                &copy;2014 The Cytoscape Consortium
+            </p>
+            <p>
+                Powered by <a href="">Cytoscape.js</a>
+            </p>
         </span>
     </footer>
 </div>
 <script>
-    $(function () {
-        $(window).resize(function () {
-            $('.top').height($(window).height());
-        });
-        $(window).resize();
+$(function() {
+    $(window).resize(function() {
+        $('.top').height($(window).height());
     });
+    $(window).resize();
+});
 </script>
