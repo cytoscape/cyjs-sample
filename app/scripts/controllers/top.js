@@ -7,6 +7,7 @@ angular.module('cyViewerApp')
 
         $scope.visualize = function(networkUrl, styleUrl) {
             console.log('NET ================= ' + networkUrl);
+            $rootScope.networkUrl = networkUrl;
             var encodedNetworkUrl = encodeURIComponent(networkUrl);
 
             // Validation
@@ -22,6 +23,7 @@ angular.module('cyViewerApp')
 
         $scope.visualizeGist = function (gistId) {
             console.log('GIST NET2 ================= ' + gistId);
+            $rootScope.gistId = gistId;
             $location.path('/gists/' + gistId);
         };
 

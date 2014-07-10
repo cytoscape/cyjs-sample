@@ -1,7 +1,7 @@
 /*global _, angular */
 
 angular.module('cyViewerApp')
-    .controller('MainCtrl', function ($scope, $http, $location, $routeParams, Network, VisualStyles, Gist) {
+    .controller('MainCtrl', function($scope, $http, $location, $routeParams, $window, Network, VisualStyles, Gist) {
 
         'use strict';
 
@@ -37,11 +37,19 @@ angular.module('cyViewerApp')
         $scope.currentVS = DEFAULT_VISUAL_STYLE_NAME;
         $scope.currentNetworkData = null;
 
-        $scope.browserState = {show: false};
-        $scope.overlayState = {show: true};
-        $scope.toolbarState = {show: true};
+        $scope.browserState = {
+            show: false
+        };
+        $scope.overlayState = {
+            show: true
+        };
+        $scope.toolbarState = {
+            show: true
+        };
 
-        $scope.bg = {color: '#FAFAFA'};
+        $scope.bg = {
+            color: '#FAFAFA'
+        };
 
         $scope.columnNames = [];
         $scope.edgeColumnNames = [];
@@ -54,7 +62,7 @@ angular.module('cyViewerApp')
         NETWORK_FILE = $routeParams.url;
 
         var styleLocation = $scope.encodedStyle;
-        if(!styleLocation) {
+        if (!styleLocation) {
             visualStyleFile = PRESET_STYLE_FILE;
         } else {
             visualStyleFile = $scope.encodedStyle;
@@ -70,17 +78,19 @@ angular.module('cyViewerApp')
                 name: 'preset'
             },
 
-            ready: function () {
+            ready: function() {
                 $scope.cy = this;
                 $scope.cy.load(networkData.elements);
 
-                if(!gistStyle) {
-                    VisualStyles.query({styleUrl: visualStyleFile}, function(vs) {
+                if (!gistStyle) {
+                    VisualStyles.query({
+                        styleUrl: visualStyleFile
+                    }, function(vs) {
                         init(vs);
                         dropSupport();
                         setEventListeners();
                         var newStyle = $routeParams.selectedstyle;
-                        if(!newStyle) {
+                        if (!newStyle) {
                             newStyle = DEFAULT_VISUAL_STYLE_NAME;
                         }
                         $scope.cy.style().fromJson($scope.visualStyles[newStyle].style).update();
@@ -101,21 +111,21 @@ angular.module('cyViewerApp')
 
         function dropSupport() {
             var dropZone = angular.element(NETWORK_SECTION_ID);
-            dropZone.on('dragenter', function (e) {
+            dropZone.on('dragenter', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
             });
 
-            dropZone.on('dragover', function (e) {
+            dropZone.on('dragover', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
             });
-            dropZone.on('drop', function (e) {
+            dropZone.on('drop', function(e) {
                 e.preventDefault();
                 var files = e.originalEvent.dataTransfer.files;
                 var networkFile = files[0];
                 var reader = new FileReader();
-                reader.onload = function (evt) {
+                reader.onload = function(evt) {
                     var network = JSON.parse(evt.target.result);
                     var networkName = 'Unknown';
                     // Check data section is available or not.
@@ -133,7 +143,7 @@ angular.module('cyViewerApp')
                         networkName = networkName + '*';
                     }
 
-                    $scope.$apply(function () {
+                    $scope.$apply(function() {
                         $scope.networks[networkName] = network;
                         $scope.networkNames.push(networkName);
                         $scope.currentNetwork = networkName;
@@ -153,7 +163,7 @@ angular.module('cyViewerApp')
 
             // Set network name
             var networkName = networkData.data.name;
-            if(!$scope.networks[networkName]) {
+            if (!$scope.networks[networkName]) {
                 $scope.networks[networkName] = networkData;
                 $scope.networkNames.push(networkName);
                 $scope.currentNetwork = networkData.data.name;
@@ -161,17 +171,17 @@ angular.module('cyViewerApp')
             // Get column names
             setColumnNames();
 
-            if($routeParams.x !== undefined && $routeParams.y !== undefined) {
+            if ($routeParams.x !== undefined && $routeParams.y !== undefined) {
                 $scope.cy.pan({
                     x: parseFloat(panX),
                     y: parseFloat(panY)
                 });
             }
-            if($routeParams.zoom) {
+            if ($routeParams.zoom) {
                 $scope.cy.zoom(parseFloat(zoomLevel));
             }
 
-            if($routeParams.bgcolor) {
+            if ($routeParams.bgcolor) {
                 $scope.bg.color = $routeParams.bgcolor;
             }
         }
@@ -182,14 +192,14 @@ angular.module('cyViewerApp')
             $scope.networkColumnNames = [];
 
             var oneNode = $scope.nodes[0];
-            for(var colName in oneNode.data) {
+            for (var colName in oneNode.data) {
                 $scope.columnNames.push(colName);
             }
             var oneEdge = $scope.edges[0];
-            for(var edgeColName in oneEdge.data) {
+            for (var edgeColName in oneEdge.data) {
                 $scope.edgeColumnNames.push(edgeColName);
             }
-            for(var netColName in networkData.data) {
+            for (var netColName in networkData.data) {
                 $scope.networkColumnNames.push(netColName);
             }
         }
@@ -209,32 +219,32 @@ angular.module('cyViewerApp')
             var updateFlag = false;
 
             // Node selection
-            $scope.cy.on('select', 'node', function (event) {
+            $scope.cy.on('select', 'node', function(event) {
                 var id = event.cyTarget.id();
                 $scope.selectedNodes[id] = event.cyTarget;
                 updateFlag = true;
             });
 
-            $scope.cy.on('select', 'edge', function (event) {
+            $scope.cy.on('select', 'edge', function(event) {
                 var id = event.cyTarget.id();
                 $scope.selectedEdges[id] = event.cyTarget;
                 updateFlag = true;
             });
 
             // Reset selection
-            $scope.cy.on('unselect', 'node', function (event) {
+            $scope.cy.on('unselect', 'node', function(event) {
                 var id = event.cyTarget.id();
                 delete $scope.selectedNodes[id];
                 updateFlag = true;
             });
-            $scope.cy.on('unselect', 'edge', function (event) {
+            $scope.cy.on('unselect', 'edge', function(event) {
                 var id = event.cyTarget.id();
                 delete $scope.selectedEdges[id];
                 updateFlag = true;
             });
 
             setInterval(function() {
-                if(updateFlag && $scope.browserState.show) {
+                if (updateFlag && $scope.browserState.show) {
                     console.log('* update called');
                     $scope.$apply();
                     updateFlag = false;
@@ -244,7 +254,7 @@ angular.module('cyViewerApp')
         }
 
         function initVisualStyleCombobox(vs) {
-            _.each(vs, function (visualStyle) {
+            _.each(vs, function(visualStyle) {
                 $scope.visualStyles[visualStyle.title] = visualStyle;
             });
         }
@@ -277,7 +287,7 @@ angular.module('cyViewerApp')
             console.log(encodedStyleName);
             console.log(bgColor);
             $scope.encodedUrl = originalLocation + '?selectedstyle=' + encodedStyleName +
-                '&x=' + pan.x +'&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
+                '&x=' + pan.x + '&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
         };
 
 
@@ -292,7 +302,7 @@ angular.module('cyViewerApp')
             });
             // Store the data-dump of the FORM scope.
             request.success(
-                function( json ) {
+                function(json) {
                     $scope.encodedUrl = json.id;
                     angular.element('#shareUrl').select();
                 }
@@ -302,7 +312,7 @@ angular.module('cyViewerApp')
         //
         // Apply Visual Style
         //
-        $scope.switchVS = function () {
+        $scope.switchVS = function() {
             var vsName = $scope.style;
             var vs = $scope.visualStyles[vsName].style;
             // Apply Visual Style
@@ -311,7 +321,7 @@ angular.module('cyViewerApp')
             $scope.currentVS = vsName;
         };
 
-        $scope.switchNetwork = function () {
+        $scope.switchNetwork = function() {
             var network = $scope.networks[$scope.currentNetwork];
             $scope.cy.load(network.elements);
             $scope.currentNetworkData = network;
@@ -323,14 +333,26 @@ angular.module('cyViewerApp')
 
         // Start loading...
         var networkData = null;
-        if(!gistId) {
-            networkData = Network.get({networkUrl: NETWORK_FILE}, function () {
-                angular.element(NETWORK_SECTION_ID).cytoscape(options);
-                $scope.currentNetworkData = networkData;
-            });
+        if (!gistId) {
+            networkData = Network.get({
+                    networkUrl: NETWORK_FILE
+                },
+                function() {
+                    angular.element(NETWORK_SECTION_ID).cytoscape(options);
+                    $scope.currentNetworkData = networkData;
+                },
+                function(response) {
+                    //404 or bad
+                    if (response.status === 404) {
+                        $window.alert('File does not exist!');
+                        $location.path('/');
+                    }
+                });
         } else {
             // This is a gist file.
-            Gist.get({gistId: gistId}, function (gistData) {
+            Gist.get({
+                gistId: gistId
+            }, function(gistData) {
                 var files = gistData.files;
 
                 // TODO: parse first one only?
@@ -338,7 +360,7 @@ angular.module('cyViewerApp')
                 _.each(files, function(targetFile) {
                     var fileName = targetFile.filename;
                     console.log('File name = ' + fileName);
-                    if(fileName === GIST_STYLE_FILE_NAME) {
+                    if (fileName === GIST_STYLE_FILE_NAME) {
                         gistStyle = JSON.parse(targetFile.content);
                     } else {
                         var net = JSON.parse(targetFile.content);
@@ -351,6 +373,12 @@ angular.module('cyViewerApp')
                 networkData = $scope.networks[$scope.networkNames[0]];
                 $scope.currentNetworkData = networkData;
                 angular.element(NETWORK_SECTION_ID).cytoscape(options);
+            }, function(response) {
+                //404 or bad
+                if (response.status === 404) {
+                    $window.alert('Could not find Gist!');
+                    $location.path('/');
+                }
             });
         }
     });
