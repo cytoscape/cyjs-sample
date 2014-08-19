@@ -1,52 +1,47 @@
 /*global _, angular */
 
 angular.module('cyViewerApp')
-    .controller('MainCtrl', function($scope, $http, $location, $routeParams, $window, Network, VisualStyles, Gist) {
+    .controller('MainCtrl', function($scope, $http, $location, $routeParams, $window, Network, VisualStyles) {
 
         'use strict';
 
-        // If user load data from gist, they need to use this file name for Style.
-        var GIST_STYLE_FILE_NAME = 'style.json';
+        var FILE_LIST_NAME = 'filelist.json';
 
         // Name of network tag in the DOM
         var NETWORK_SECTION_ID = '#network';
 
-        // Default Visual Style file location.
-        var PRESET_STYLE_FILE = encodeURIComponent('http://localhost:3000/data/style.json');
-        // var PRESET_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
-
-        // Default Visual Style name to be selected.
+        // Default Visual Style name
         var DEFAULT_VISUAL_STYLE_NAME = 'default';
 
-        var NETWORK_FILE;
         var visualStyleFile;
+        var networkData;
 
-        var gistStyle = null;
-
-        // Parse url parameters
-        var gistId = $routeParams.id;
-        var zoomLevel = $routeParams.zoom;
-        var panX = $routeParams.x;
-        var panY = $routeParams.y;
 
         // Application global objects
         $scope.networks = {};
-        $scope.visualStyles = {};
-        $scope.styleNames = [];
+        $scope.currentVS = null;
+        $scope.visualStyles = [];
+        $scope.visualStyleNames = [];
         $scope.networkNames = [];
-        $scope.currentVS = DEFAULT_VISUAL_STYLE_NAME;
         $scope.currentNetworkData = null;
 
+
+        // Show / Hide Table browser
         $scope.browserState = {
             show: false
         };
+
+        // Show / Hide style selector UI
         $scope.overlayState = {
             show: true
         };
+
+        // Show / Hide toolbar
         $scope.toolbarState = {
             show: true
         };
 
+        // Background color
         $scope.bg = {
             color: '#FAFAFA'
         };
@@ -54,19 +49,6 @@ angular.module('cyViewerApp')
         $scope.columnNames = [];
         $scope.edgeColumnNames = [];
         $scope.networkColumnNames = [];
-
-        var originalLocation = $location.absUrl().split('?')[0];
-
-        console.log('GistID: ' + gistId);
-        console.log('Network rendering start... ' + $routeParams.url);
-        NETWORK_FILE = $routeParams.url;
-
-        var styleLocation = $scope.encodedStyle;
-        if (!styleLocation) {
-            visualStyleFile = PRESET_STYLE_FILE;
-        } else {
-            visualStyleFile = $scope.encodedStyle;
-        }
 
         // Basic settings for the Cytoscape window
         var options = {
@@ -82,29 +64,15 @@ angular.module('cyViewerApp')
                 $scope.cy = this;
                 $scope.cy.load(networkData.elements);
 
-                if (!gistStyle) {
-                    VisualStyles.query({
-                        styleUrl: visualStyleFile
-                    }, function(vs) {
+                VisualStyles.query(
+                    {filename: visualStyleFile}, function (vs) {
                         init(vs);
                         dropSupport();
                         setEventListeners();
-                        var newStyle = $routeParams.selectedstyle;
-                        if (!newStyle) {
-                            newStyle = DEFAULT_VISUAL_STYLE_NAME;
-                        }
-                        $scope.cy.style().fromJson($scope.visualStyles[newStyle].style).update();
-                        $scope.style = newStyle;
+                        $scope.currentVS = DEFAULT_VISUAL_STYLE_NAME;
+                        $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE_NAME].style).update();
                         angular.element('.loading').remove();
                     });
-                } else {
-                    init(gistStyle);
-                    dropSupport();
-                    setEventListeners();
-                    $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE_NAME].style).update();
-                    $scope.style = DEFAULT_VISUAL_STYLE_NAME;
-                    angular.element('.loading').remove();
-                }
             }
         };
 
@@ -170,16 +138,6 @@ angular.module('cyViewerApp')
             }
             // Get column names
             setColumnNames();
-
-            if ($routeParams.x !== undefined && $routeParams.y !== undefined) {
-                $scope.cy.pan({
-                    x: parseFloat(panX),
-                    y: parseFloat(panY)
-                });
-            }
-            if ($routeParams.zoom) {
-                $scope.cy.zoom(parseFloat(zoomLevel));
-            }
 
             if ($routeParams.bgcolor) {
                 $scope.bg.color = $routeParams.bgcolor;
@@ -256,7 +214,10 @@ angular.module('cyViewerApp')
         function initVisualStyleCombobox(vs) {
             _.each(vs, function(visualStyle) {
                 $scope.visualStyles[visualStyle.title] = visualStyle;
+                $scope.visualStyleNames.push(visualStyle.title);
             });
+
+            $scope.currentVS = DEFAULT_VISUAL_STYLE_NAME;
         }
 
 
@@ -276,109 +237,61 @@ angular.module('cyViewerApp')
             $scope.cy.fit();
         };
 
-        $scope.encodeUrl = function() {
-            var pan = $scope.cy.pan();
-            var zoom = $scope.cy.zoom();
 
-            // The following fields should be encoded because it may includes special chars.
-            var bgColor = encodeURIComponent($scope.bg.color);
-            var encodedStyleName = encodeURIComponent($scope.currentVS);
-            console.log(zoom);
-            console.log(encodedStyleName);
-            console.log(bgColor);
-            $scope.encodedUrl = originalLocation + '?selectedstyle=' + encodedStyleName +
-                '&x=' + pan.x + '&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
-        };
-
-
-        // Encode visualization URL.
-        $scope.shortenUrl = function() {
-            var request = $http({
-                method: 'post',
-                url: 'https://www.googleapis.com/urlshortener/v1/url',
-                data: {
-                    longUrl: $scope.encodedUrl
-                }
-            });
-            // Store the data-dump of the FORM scope.
-            request.success(
-                function(json) {
-                    $scope.encodedUrl = json.id;
-                    angular.element('#shareUrl').select();
-                }
-            );
-        };
-
-        //
         // Apply Visual Style
-        //
         $scope.switchVS = function() {
-            var vsName = $scope.style;
+            var vsName = $scope.currentVS.trim();
+            console.log('New Visual Style = ' + vsName);
             var vs = $scope.visualStyles[vsName].style;
             // Apply Visual Style
             $scope.cy.style().fromJson(vs).update();
-            // Set current title
-            $scope.currentVS = vsName;
         };
+
 
         $scope.switchNetwork = function() {
-            var network = $scope.networks[$scope.currentNetwork];
-            $scope.cy.load(network.elements);
-            $scope.currentNetworkData = network;
-            reset();
-            $scope.nodes = network.elements.nodes;
-            $scope.edges = network.elements.edges;
-            setColumnNames();
+            var networkFile = $scope.networks[$scope.currentNetwork];
+
+            networkData = Network.get(
+                {filename: networkFile},
+                function (network) {
+                    $scope.cy.load(network.elements);
+                    $scope.currentNetworkData = networkData;
+                    reset();
+                    $scope.nodes = network.elements.nodes;
+                    $scope.edges = network.elements.edges;
+                    setColumnNames();
+                });
+
+
         };
 
-        // Start loading...
-        var networkData = null;
-        if (!gistId) {
-            networkData = Network.get({
-                    networkUrl: NETWORK_FILE
-                },
-                function() {
-                    angular.element(NETWORK_SECTION_ID).cytoscape(options);
-                    $scope.currentNetworkData = networkData;
-                },
-                function(response) {
-                    //404 or bad
-                    if (response.status === 404) {
-                        $window.alert('File does not exist!');
-                        $location.path('/');
-                    }
-                });
-        } else {
-            // This is a gist file.
-            Gist.get({
-                gistId: gistId
-            }, function(gistData) {
-                var files = gistData.files;
+        ///////////////////// Start the loading process ////////////////
 
-                // TODO: parse first one only?
 
-                _.each(files, function(targetFile) {
-                    var fileName = targetFile.filename;
-                    console.log('File name = ' + fileName);
-                    if (fileName === GIST_STYLE_FILE_NAME) {
-                        gistStyle = JSON.parse(targetFile.content);
-                    } else {
-                        var net = JSON.parse(targetFile.content);
-                        var netName = net.data.name;
-                        $scope.networks[netName] = net;
-                        $scope.networkNames.push(netName);
-                        $scope.currentNetwork = netName;
+        $http.get(FILE_LIST_NAME).success(function(fileList) {
+            visualStyleFile = fileList.style;
+
+            var defaultNetworkName = null;
+
+            _.each(_.keys(fileList), function(key) {
+                console.log(key);
+                if(key !== 'style') {
+                    if(defaultNetworkName === null) {
+                        defaultNetworkName = key;
                     }
-                });
-                networkData = $scope.networks[$scope.networkNames[0]];
-                $scope.currentNetworkData = networkData;
-                angular.element(NETWORK_SECTION_ID).cytoscape(options);
-            }, function(response) {
-                //404 or bad
-                if (response.status === 404) {
-                    $window.alert('Could not find Gist!');
-                    $location.path('/');
+                    $scope.networks[key] = fileList[key];
+                    $scope.networkNames.push(key);
                 }
             });
-        }
+
+            console.log('Target Network File = ' + $scope.networkNames[defaultNetworkName]);
+
+            networkData = Network.get(
+                {filename: $scope.networks[defaultNetworkName]},
+                function () {
+                    angular.element(NETWORK_SECTION_ID).cytoscape(options);
+                    $scope.currentNetworkData = networkData;
+                    $scope.currentNetwork = defaultNetworkName;
+                });
+        });
     });

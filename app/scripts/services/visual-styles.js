@@ -6,6 +6,6 @@
 
 angular.module('cyViewerApp')
     .factory('VisualStyles', ['$resource', function ($resource) {
-        return $resource('/styles/:styleUrl');
+        return $resource('data/:filename', {filename: '@filename'});
     }]
 );

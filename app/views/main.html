@@ -6,17 +6,13 @@
 
 <div class="summary" ng-show="overlayState.show">
     <h3>Network:</h3>
-    <select class="form-control" id="network-selector" ng-change="switchNetwork()" ng-model="currentNetwork">
-        <option ng-repeat="networkName in networkNames">
-            {{ networkName }}
-        </option>
+    <select class="form-control" id="network-selector"
+            ng-options="networkName for networkName in networkNames" ng-change="switchNetwork()" ng-model="currentNetwork">
     </select>
 
     <h3>Visual Style:</h3>
-    <select class="form-control" id="vs-selector" ng-change="switchVS()" ng-model="style">
-        <option ng-repeat="style in visualStyles">
-            {{ style.title }}
-        </option>
+    <select class="form-control" id="vs-selector"
+            ng-options="styleName for styleName in visualStyleNames" ng-change="switchVS()" ng-model="currentVS">
     </select>
 </div>
 
@@ -71,10 +67,8 @@
 <div class="home-button" ng-click="toggleToolbar()" style="clear:both;" tooltip-placement="left" tooltip="Show/Hide Toolbar">
     <span class="glyphicon glyphicon-sort"></span>
 </div>
+
 <div class="command-bar" ng-show="toolbarState.show">
-    <div class="icon-button orange" data-toggle="modal" data-target="#share" ng-click="encodeUrl()" tooltip-placement="left" tooltip="Share!">
-        <span class="glyphicon glyphicon-share-alt"></span>
-    </div>
     <div class="icon-button" ng-click="toggleTableBrowser()" tooltip-placement="left" tooltip="Show/Hide Table">
         <span class="glyphicon glyphicon-list-alt"></span>
     </div>
@@ -92,28 +86,5 @@
         <a href="/">
             <span class="glyphicon glyphicon-home"></span>
         </a>
-    </div>
-
-</div>
-
-<div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Share This Visualization</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <input type="url" autofocus class="form-control" id="shareUrl" value="{{encodedUrl}}">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="shortenUrl()">Shorten URL</button>
-            </div>
-        </div>
     </div>
 </div>

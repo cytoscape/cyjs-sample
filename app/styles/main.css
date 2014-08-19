@@ -5005,31 +5005,92 @@ td.visible-print {
 
 /* Space out content a bit */
 html, body {
+  font-face: "Helvatica Neu";
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   background-color: #ffffff; }
 
+.tooltip-inner {
+  color: #FFFFFF;
+  padding: 15px; }
+
 nav {
   background-color: rgba(0, 0, 0, 0);
   height: 60px;
   z-index: 1000;
-  color: #FFFFFF !important; }
+  color: #FFFFFF; }
 
 .navbar {
   background-color: rgba(0, 0, 0, 0);
   padding-top: 5px;
   border: none;
-  color: #dddddd !important; }
+  color: #dddddd; }
 
 .navbar-brand {
   font-size: 32px;
   font-weight: 100;
-  color: #dddddd !important; }
+  color: #dddddd; }
 
 #vs-selector, #network-selector {
-  width: 400px; }
+  width: 100% !important;
+  color: #444444 !important; }
+
+.tabpane {
+  padding: 30px; }
+
+/*
+  Top page layout.
+*/
+.top {
+  height: 100%;
+  background-color: #fafafa;
+  background: url("../images/small_fit.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+  .top p, .top h1 {
+    text-align: center; }
+  .top p {
+    font-size: 1em; }
+  .top h1 {
+    font-weight: 100;
+    color: #555555;
+    font-size: 8.5em;
+    width: 100%; }
+  .top label {
+    margin-bottom: 10px; }
+  .top .button {
+    background: rgba(255, 255, 255, 0.6);
+    border: solid 1px #666666;
+    color: inherit;
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: 200;
+    width: 100%;
+    padding: 0.6em 0;
+    margin-top: 0.5em;
+    text-align: center;
+    text-decoration: none; }
+  .top .button:hover {
+    background: rgba(10, 230, 206, 0.7);
+    border: solid 1px; }
+  .top #cylogo {
+    width: 9em;
+    text-align: center; }
+  .top img {
+    display: block;
+    margin: 0 auto;
+    text-align: center; }
+  .top .padded {
+    padding-top: 25px;
+    padding-bottom: 10px; }
+  .top .lead {
+    font-size: 1.5em;
+    color: #757575;
+    font-weight: 300; }
 
 #network {
   z-index: 0;
@@ -5053,8 +5114,8 @@ nav {
   overflow-x: scroll;
   overflow-y: scroll;
   padding: 20px;
-  color: #555555;
-  background-color: rgba(255, 255, 255, 0.9);
+  color: #444444;
+  background-color: rgba(255, 255, 255, 0.8);
   position: fixed;
   left: 0;
   bottom: 0;
@@ -5072,63 +5133,85 @@ tbody tr td {
   min-width: 150px !important;
   word-break: break-all; }
 
-/*
-  Custom Buttons
-*/
-.button-bar {
-  font-size: 10px;
+.command-bar {
   color: #555555;
-  background-color: #DDDDDD;
+  background-color: #e2e2e4;
   position: fixed;
-  bottom: 1em;
-  width: 100%;
+  top: 65px;
+  right: 0;
+  height: 100%;
+  width: 65px;
   z-index: 200; }
+  .command-bar .icon-button {
+    font-size: 38px;
+    color: #444444;
+    text-align: center;
+    vertical-align: center;
+    z-index: 200;
+    padding-top: 5px;
+    padding-left: 2px;
+    margin-top: 10px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 54px;
+    width: 100%; }
+  .command-bar .orange {
+    color: #FFFFFF;
+    background-color: orangered;
+    margin-top: 0; }
 
-.custom-button {
-  border: solid #666666 2px;
+.command-bar.ng-hide-add, .command-bar.ng-hide-remove {
+  -webkit-transition: all ease-out 0.8s;
+  -moz-transition: all ease-out 0.8s;
+  -o-transition: all ease-out 0.8s;
+  transition: all ease-out 0.8s;
+  display: block !important; }
+
+.command-bar.ng-hide-add.ng-hide-add-active, .command-bar.ng-hide-remove {
+  opacity: 0; }
+
+.command-bar.ng-hide-add, .command-bar.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1; }
+
+.home-button {
+  z-index: 900;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 65px;
+  height: 65px;
+  margin: 0;
+  background-color: #009ddc;
+  padding-top: 8px;
+  text-align: center;
+  font-size: 40px;
+  color: #FFFFFF; }
+
+/*
+  Network and VS Selector
+*/
+.summary {
+  overflow-x: none;
+  overflow-y: none !important;
+  font-size: 1em;
+  font-weight: 300;
   color: #555555;
   background-color: rgba(0, 0, 0, 0);
-  text-align: center;
-  font-size: 30px;
-  z-index: 200;
-  float: left;
-  border-radius: 8px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  height: 52px;
-  width: 52px; }
-
-.overlay {
-  overflow-x: none;
-  overflow-y: scroll !important;
-  font-size: 18px;
-  font-weight: 100;
-  border: solid #dddddd 1px;
-  border-radius: 8;
-  color: #FFFFFF;
-  background-color: rgba(55, 55, 55, 0.85);
   position: fixed;
-  top: 10px;
-  right: 10px;
-  padding-top: 10px;
-  height: 20%;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  padding-top: 0;
   width: 400px;
   z-index: 200; }
-  .overlay h4 {
-    font-weight: 100;
-    padding: 10px;
-    text-align: center;
-    background-color: #EEEEEE;
-    color: #444444; }
+  .summary h3 {
+    padding-bottom: 5px;
+    padding-left: 5px;
+    font-size: 1em; }
 
 .float-table {
   overflow-x: none;
@@ -5136,8 +5219,7 @@ tbody tr td {
   padding: 40px; }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.footer {
+.header, .footer {
   padding-left: 15px;
   padding-right: 15px; }
 
@@ -5148,11 +5230,18 @@ tbody tr td {
   line-height: 40px;
   padding-bottom: 19px; }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5; }
+footer {
+  font-weight: 300;
+  width: 100%;
+  color: #777777;
+  padding: 1.3em;
+  text-align: center; }
+
+footer .copyright {
+  font-size: 1em; }
+
+footer .copyright a {
+  color: inherit; }
 
 .container-narrow > hr {
   margin: 30px 0; }
@@ -5163,9 +5252,7 @@ tbody tr td {
     max-width: 730px; }
 
   /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
+  .header, .marketing, .footer {
     padding-left: 0;
     padding-right: 0; }
 
@@ -5176,3 +5263,14 @@ tbody tr td {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0; } }
+/*
+  Responsive: for phones
+*/
+@media screen and (max-width: 768px) {
+  .top h1 {
+    font-size: 3em !important;
+    font-weight: 300;
+    padding-top: 1em !important;
+    margin-top: 0; }
+  .top .padded {
+    padding: 1em; } }
