@@ -14,6 +14,11 @@
     <select class="form-control" id="vs-selector"
             ng-options="styleName for styleName in visualStyleNames" ng-change="switchVS()" ng-model="currentVS">
     </select>
+
+    <h3>Layout:</h3>
+    <select class="form-control" id="layout-selector"
+            ng-options="layoutName for layoutName in LAYOUTS" ng-change="switchLayout()" ng-model="currentLayout">
+    </select>
 </div>
 
 <div ng-show="browserState.show" class="table-browser">
@@ -80,11 +85,5 @@
     </div>
     <div class="icon-button" colorpicker colorpicker-position="left" ng-model="bg.color" tooltip-placement="left" tooltip="Set Background Color">
         <span class="glyphicon glyphicon-tint"></span>
-    </div>
-
-    <div class="icon-button" tooltip-placement="left" tooltip="Back to Top Page">
-        <a href="/">
-            <span class="glyphicon glyphicon-home"></span>
-        </a>
     </div>
 </div>

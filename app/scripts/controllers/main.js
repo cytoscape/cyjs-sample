@@ -16,6 +16,10 @@ angular.module('cyViewerApp')
         var visualStyleFile;
         var networkData;
 
+        $scope.LAYOUTS = [
+            'preset', 'random', 'grid', 'circle', 'concentric', 'breadthfirst', 'cose'
+        ];
+
 
         // Application global objects
         $scope.networks = {};
@@ -70,6 +74,7 @@ angular.module('cyViewerApp')
                         dropSupport();
                         setEventListeners();
                         $scope.currentVS = DEFAULT_VISUAL_STYLE_NAME;
+                        $scope.currentLayout = 'preset';
                         $scope.cy.style().fromJson($scope.visualStyles[DEFAULT_VISUAL_STYLE_NAME].style).update();
                         angular.element('.loading').remove();
                     });
@@ -263,6 +268,13 @@ angular.module('cyViewerApp')
                 });
 
 
+        };
+
+        $scope.switchLayout = function() {
+            var layoutOptions = {
+                name: $scope.currentLayout
+            };
+            $scope.cy.layout(layoutOptions);
         };
 
         ///////////////////// Start the loading process ////////////////
