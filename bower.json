@@ -11,7 +11,7 @@
     "angular-cookies": "1.2.6",
     "angular-sanitize": "1.2.6",
     "angular-route": "1.2.6",
-    "cytoscape.js": "git@github.com:cytoscape/cytoscape.js.git#~2.0.4"
+    "cytoscape.js": "https://github.com/cytoscape/cytoscape.js.git#~2.0.4"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
