@@ -6,7 +6,7 @@ angular.module('cyViewerApp')
         $scope.advancedMenu = {show: false};
 
         $scope.visualize = function(networkUrl, styleUrl) {
-            console.log('NET ================= ' + networkUrl);
+            console.log('Network File = ' + networkUrl);
             $rootScope.networkUrl = networkUrl;
             var encodedNetworkUrl = encodeURIComponent(networkUrl);
 
@@ -14,7 +14,7 @@ angular.module('cyViewerApp')
 
 
             if(!styleUrl) {
-                console.log('STYLE UNDEF ================= ' + styleUrl);
+                console.log('STYLE file is default: ' + styleUrl);
             } else {
                 $rootScope.encodedStyle = encodeURIComponent(styleUrl);
             }
@@ -22,7 +22,6 @@ angular.module('cyViewerApp')
         };
 
         $scope.visualizeGist = function (gistId) {
-            console.log('GIST NET2 ================= ' + gistId);
             $rootScope.gistId = gistId;
             $location.path('/gists/' + gistId);
         };

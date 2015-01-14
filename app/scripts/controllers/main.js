@@ -13,7 +13,6 @@ angular.module('cyViewerApp')
 
         // Default Visual Style file location.
         var PRESET_STYLE_FILE = encodeURIComponent('http://localhost:3000/data/style.json');
-        // var PRESET_STYLE_FILE = 'https%3a%2f%2fdl%2edropboxusercontent%2ecom%2fu%2f161833%2fstyle%2ejson';
 
         // Default Visual Style name to be selected.
         var DEFAULT_VISUAL_STYLE_NAME = 'default';
@@ -28,6 +27,7 @@ angular.module('cyViewerApp')
         var zoomLevel = $routeParams.zoom;
         var panX = $routeParams.x;
         var panY = $routeParams.y;
+        var savedStyleFileLocation = $routeParams.stylefile;
 
         // Application global objects
         $scope.networks = {};
@@ -58,15 +58,22 @@ angular.module('cyViewerApp')
         var originalLocation = $location.absUrl().split('?')[0];
 
         console.log('GistID: ' + gistId);
-        console.log('Network rendering start... ' + $routeParams.url);
+        console.log('Network rendering start2... ' + $routeParams.url);
         NETWORK_FILE = $routeParams.url;
 
+        // Check style file exists or not
         var styleLocation = $scope.encodedStyle;
+
         if (!styleLocation) {
             visualStyleFile = PRESET_STYLE_FILE;
         } else {
-            visualStyleFile = $scope.encodedStyle;
+            visualStyleFile = styleLocation;
         }
+
+        if(typeof savedStyleFileLocation !== 'undefined') {
+            visualStyleFile = savedStyleFileLocation;
+        }
+        console.log('FINAL STYLE = ' + visualStyleFile);
 
         // Basic settings for the Cytoscape window
         var options = {
@@ -93,6 +100,8 @@ angular.module('cyViewerApp')
                         if (!newStyle) {
                             newStyle = DEFAULT_VISUAL_STYLE_NAME;
                         }
+
+                        console.log('##New Stytle = ' + newStyle);
                         $scope.cy.style().fromJson($scope.visualStyles[newStyle].style).update();
                         $scope.style = newStyle;
                         angular.element('.loading').remove();
@@ -286,8 +295,17 @@ angular.module('cyViewerApp')
             console.log(zoom);
             console.log(encodedStyleName);
             console.log(bgColor);
-            $scope.encodedUrl = originalLocation + '?selectedstyle=' + encodedStyleName +
-                '&x=' + pan.x + '&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
+
+            var finalURL = originalLocation;
+            if(typeof styleLocation === 'undefined') {
+                finalURL = finalURL + '?selectedstyle=' + encodedStyleName +
+                  '&x=' + pan.x + '&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
+            } else {
+                finalURL = finalURL + '?stylefile=' + styleLocation +
+                  '&selectedstyle=' + encodedStyleName +
+                  '&x=' + pan.x + '&y=' + pan.y + '&zoom=' + zoom + '&bgcolor=' + bgColor;
+            }
+            $scope.encodedUrl = finalURL;
         };
 
 
@@ -334,7 +352,8 @@ angular.module('cyViewerApp')
         // Start loading...
         var networkData = null;
         if (!gistId) {
-            networkData = Network.get({
+                // Regular URLs
+                networkData = Network.get({
                     networkUrl: NETWORK_FILE
                 },
                 function() {
