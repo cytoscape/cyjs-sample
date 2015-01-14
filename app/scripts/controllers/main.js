@@ -72,6 +72,7 @@ angular.module('cyViewerApp')
 
         if(typeof savedStyleFileLocation !== 'undefined') {
             visualStyleFile = savedStyleFileLocation;
+            styleLocation = savedStyleFileLocation;
         }
         console.log('FINAL STYLE = ' + visualStyleFile);
 
