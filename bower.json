@@ -13,7 +13,7 @@
     "angular-sanitize": "1.2.16",
     "angular-route": "1.2.16",
     "sass-bootstrap": "~3.0.2",
-    "cytoscape.js": "git@github.com:cytoscape/cytoscape.js.git",
+    "cytoscape.js": "https://github.com/cytoscape/cytoscape.js.git",
     "angular-bootstrap": "latest",
     "angular-underscore": "*",
     "angular-bootstrap-colorpicker": "~3.0.7",
