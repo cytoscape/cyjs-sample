@@ -3,26 +3,29 @@
   "version": "0.1.1",
   "dependencies": {
     "underscore": "latest",
-    "angular": "1.2.18",
+    "angular": "1.3.12",
     "json3": "~3.2.6",
     "es5-shim": "~2.1.0",
     "jquery": "~1.11.0",
     "bootstrap": "~3.0.3",
-    "angular-resource": "1.2.16",
-    "angular-cookies": "1.2.16",
-    "angular-sanitize": "1.2.16",
-    "angular-route": "1.2.16",
+    "angular-resource": "1.3.12",
+    "angular-cookies": "1.3.12",
+    "angular-sanitize": "1.3.12",
+    "angular-route": "1.3.12",
     "sass-bootstrap": "~3.0.2",
     "cytoscape.js": "https://github.com/cytoscape/cytoscape.js.git",
     "angular-bootstrap": "latest",
     "angular-underscore": "*",
-    "angular-bootstrap-colorpicker": "~3.0.7",
+    "angular-bootstrap-colorpicker": "latest",
     "spinjs": "~2.0.1",
-    "angular-spinner": "~0.5.0",
-    "angular-animate": "~1.2.18"
+    "angular-spinner": "latest",
+    "angular-animate": "latest"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.16",
-    "angular-scenario": "1.2.16"
+    "angular-mocks": "1.3.12",
+    "angular-scenario": "1.3.12"
+  },
+  "resolutions": {
+    "angular": ">=1.0.0 <1.4.0"
   }
 }
