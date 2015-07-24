@@ -9,7 +9,7 @@
 
         <div class="row padded">
             <p class="lead">
-                An easy way to share your network data visualizations
+                An easy way to share your network visualizations
             </p>
         </div>
 
@@ -32,7 +32,7 @@
                     <div class="tabpane">
                         <form class="form-horizontal" role="form" ng-submit="visualize(networkUrl, styleUrl)">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="networkUrl">Graph URL</label>
+                                <label class="col-sm-3 control-label" for="networkUrl">Network Data URL</label>
 
                                 <div class="col-sm-9">
                                     <input autofocus autocomplete="on" required list="networks" type="url" class="form-control" id="networkUrl" placeholder="Enter Network File URL" ng-model="networkUrl">
@@ -42,13 +42,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="styleUrl">Style URL (Optional)</label>
+                                <label class="col-sm-3 control-label" for="styleUrl">Visual Style URL (Optional)</label>
 
                                 <div class="col-sm-7">
                                     <input type="url" class="form-control" id="styleUrl" placeholder="Enter Style URL" ng-model="styleUrl">
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success">Visualize</button>
+                                    <button type="submit" class="btn btn-success">Visualize!</button>
                                 </div>
                             </div>
                         </form>
@@ -78,14 +78,14 @@
     <footer>
         <span class="copyright">
             <h4>
-                &copy;2014 <a href="http://www.cytoscapeconsortium.org/">The Cytoscape Consortium</a>
+                &copy;2014 - 2015 <a href="http://www.cytoscapeconsortium.org/">The Cytoscape Consortium</a>
             </h4>
             <p>
                 Developed by University of California, San Diego 
                 <a href="http://idekerlab.ucsd.edu/Pages/default.aspx">Trey Ideker Lab</a><br/>
-                Powered by <a href="http://cytoscape.github.io/cytoscape.js/">Cytoscape.js</a>
+                Powered by <a href="http://js.cytoscape.org/">Cytoscape.js</a><br/>
                 Code licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>. Documentation licensed under 
-                <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+                <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
             </p>
         </span>
     </footer>

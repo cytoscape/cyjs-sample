@@ -316,16 +316,15 @@ angular.module('cyViewerApp')
         $scope.shortenUrl = function() {
             var request = $http({
                 method: 'post',
-                // url: 'https://www.googleapis.com/urlshortener/v1/url',
-                url: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA0v6o9ATHGLc0DO_iaAOx9RGFHHOI1J30',
+                url: '/shortener',
                 data: {
-                    longUrl: $scope.encodedUrl
+                    original: $scope.encodedUrl
                 }
             });
             // Store the data-dump of the FORM scope.
             request.success(
-                function(json) {
-                    $scope.encodedUrl = json.id;
+                function(body) {
+                    $scope.encodedUrl = body;
                     angular.element('#shareUrl').select();
                 }
             );
