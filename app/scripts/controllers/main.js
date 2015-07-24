@@ -81,6 +81,8 @@ angular.module('cyViewerApp')
             showOverlay: false,
             minZoom: 0.01,
             maxZoom: 200,
+            boxSelectionEnabled: true,
+
 
             layout: {
                 name: 'preset'
@@ -314,7 +316,8 @@ angular.module('cyViewerApp')
         $scope.shortenUrl = function() {
             var request = $http({
                 method: 'post',
-                url: 'https://www.googleapis.com/urlshortener/v1/url',
+                // url: 'https://www.googleapis.com/urlshortener/v1/url',
+                url: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA0v6o9ATHGLc0DO_iaAOx9RGFHHOI1J30',
                 data: {
                     longUrl: $scope.encodedUrl
                 }
